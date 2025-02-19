@@ -1,0 +1,61 @@
+.patient-search {
+    background: #f8f9fa;
+    padding: 20px;
+    border-radius: 8px;
+  }
+  
+  .patient-search label {
+    font-weight: bold;
+  }
+  
+  .patient-search .form-control {
+    border-radius: 6px;
+    font-size: 14px;
+  }
+  
+  .text-muted {
+    font-size: 16px;
+    font-weight: bold;
+  }
+  
+
+/* side bar */
+/* .patient-search-container {
+  display: flex;
+} */
+
+/* .sidebar {
+  position: fixed;
+  top: 0;
+  left: -300px; Initially hide sidebar */
+  /* width: 300px;
+  height: 100vh;
+  background-color: #f8f9fa;
+  padding: 20px;
+  transition: left 0.3s ease-in-out;
+}
+
+.sidebar.open {
+  left: 0;
+} */
+/* 
+.sidebar-toggle-btn {
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  z-index: 1000;
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+.sidebar h4 {
+  text-align: center;
+}
+
+.patient-cards-container {
+  margin-left: 320px;
+  padding: 20px;
+} */

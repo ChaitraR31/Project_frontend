@@ -1,0 +1,79 @@
+/* General Form Container with Glassmorphism */
+.registration-form-container {
+  background: rgba(255, 255, 255, 0.1); /* Semi-transparent white background */
+  backdrop-filter: blur(10px); /* Blur effect for glassmorphism */
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2); /* Light border for the glass effect */
+}
+
+/* Heading Styling */
+h3 {
+  font-family: 'Arial', sans-serif;
+  font-weight: bold;
+  color: #333;
+  font-size: 1.8rem;
+}
+
+/* Form Label Styling */
+.form-label {
+  font-size: 1rem;
+  font-weight: 500;
+  color: #333;
+}
+
+/* Input Fields Styling */
+.input-field {
+  background-color: rgba(248, 249, 250, 0.8); /* Slight transparency for input fields */
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  padding: 12px;
+  font-size: 1rem;
+  color: #333;
+  transition: all 0.3s ease;
+}
+
+.input-field:focus {
+  background-color: #ffffff;
+  border-color: #007bff;
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+  outline: none;
+}
+
+/* Submit Button Styling */
+.submit-button {
+  font-size: 1.1rem;
+  padding: 12px;
+  border-radius: 6px;
+  background: #e46bc9;
+  color: #fff;
+  border: none;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.submit-button:hover {
+  background: #b30086;
+  cursor: pointer;
+}
+
+/* Responsive Styling */
+@media (max-width: 576px) {
+  .registration-form-container {
+    padding: 1.5rem;
+  }
+
+  h3 {
+    font-size: 1.6rem;
+  }
+
+  .input-field {
+    padding: 10px;
+  }
+}
+
+/* Body background styling */
+body {
+  background-color: #f9c5d1; /* Light pink background for the body */
+}

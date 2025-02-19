@@ -1,0 +1,144 @@
+/* Navbar Container */
+.navbar-custom {
+  background: #003366; /* Dark professional background */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  padding: 0.5rem 2rem; /* Add more padding for a spacious look */
+  border-radius: 5px;
+  right: 16%;
+  width: 130%; /* Ensure the navbar takes full width */
+  transition: background 0.3s ease, box-shadow 0.3s ease;
+}
+
+.navbar-custom:hover {
+  background: #dd39c7; /* Slightly lighter shade on hover */
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.2);
+}
+
+/* Brand Styling */
+.navbar-custom .navbar-brand {
+  font-family: 'Roboto', sans-serif;
+  font-weight: 100;
+  font-size: 18px;
+  color: #ffffff;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  transition: color 0.3s ease;
+}
+
+.navbar-custom .navbar-brand:hover {
+  color: #ffd700; /* Gold hover effect */
+}
+
+/* Navbar Links */
+.nav-link-custom {
+  color: #ffffff !important;
+  font-weight: 500;
+  font-size: 16px;
+  padding: 12px 16px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-right: 15px;
+  transition: color 0.3s ease, background 0.3s ease, transform 0.2s ease;
+}
+
+.nav-link-custom:hover {
+  color: #ffd700 !important; /* Bright yellow hover color */
+  background-color: rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+  transform: scale(1.05); /* Slight scaling effect */
+}
+
+/* Dropdown Styling */
+.navbar-custom .dropdown-menu {
+  background: rgba(255, 255, 255, 0.95); /* Semi-transparent background */
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.navbar-custom .dropdown-item {
+  color: #333;
+  padding: 14px 20px;
+  font-size: 16px;
+  text-transform: none;
+  transition: color 0.3s ease, background 0.3s ease;
+}
+
+.navbar-custom .dropdown-item:hover {
+  background-color: #ffd700;
+  color: white;
+}
+
+.navbar-custom .dropdown-item .me-2 {
+  transition: transform 0.3s ease;
+}
+
+.navbar-custom .dropdown-item:hover .me-2 {
+  transform: translateX(5px);
+}
+
+/* Navbar Toggler (Hamburger) */
+.navbar-custom .navbar-toggler {
+  border: none;
+  border-radius: 50%;
+  background-color: #fff;
+}
+
+.navbar-custom .navbar-toggler:hover {
+  background-color: rgba(255, 255, 255, 0.7);
+}
+
+/* Active State for Navbar Links */
+.navbar-custom .nav-link-custom.active {
+  color: #ffcc00 !important; /* Active link color */
+  font-weight: 600;
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 768px) {
+  .navbar-custom {
+    padding: 0.5rem 1rem; /* Less padding on small screens */
+  }
+
+  .navbar-custom .navbar-brand {
+    font-size: 24px; /* Smaller brand font size on mobile */
+  }
+
+  .navbar-custom .nav-link-custom {
+    font-size: 14px;
+    padding: 10px 15px;
+  }
+}
+
+/* Second navbar container style */
+.navbar-custom {
+  background-color: #d44ab6; /* Dark background color */
+  padding: 0.8rem 1.5rem;
+}
+
+.nav-link-custom {
+  color: white;
+  font-size: 1rem;
+  margin-left: 10px;
+  margin-right: 10px;
+  padding: 8px 12px;
+}
+
+.nav-link-custom:hover {
+  color: #f39c12;
+}
+
+.navbar-nav {
+  display: flex;
+  align-items: center;
+}
+
+.navbar-brand {
+  font-size: 1.5rem;
+  font-weight: 400;
+}
+
+@media (max-width: 992px) {
+  .navbar-custom {
+    padding: 0.5rem;
+  }
+}

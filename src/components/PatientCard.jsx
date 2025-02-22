@@ -95,7 +95,7 @@ function PatientCard({ patient, isHovered }) {
   return patient ? (
     <div className={`card shadow-lg patient-card ${isHovered ? 'highlight' : 'dim'}`}>
       <div className="card-body">
-        <h5 className="card-title">{patient.medical_Condition.toUpperCase()}</h5>
+        <h5 className="card-title" color='black'>{patient.medical_Condition.toUpperCase()}</h5>
         <p className="card-text"><strong>Age:</strong> {patient.age}</p>
         <p className="card-text"><strong>Hospital:</strong> {patient.hospital}</p>
         <p className="card-text"><strong>Doctor:</strong> {patient.doctor}</p>
@@ -114,7 +114,7 @@ function PatientCard({ patient, isHovered }) {
           </button>
         </div>
       </div>
-    </div>
+     </div>
   ) : (
     <div>No patient data available</div>
   );

@@ -14,6 +14,7 @@ const PatientSearch = ({ patientsData }) => {
   const [diseaseFilter, setDiseaseFilter] = useState("");
   const [sortBy, setSortBy] = useState("none");
   const [bloodTypeFilter, setBloodTypeFilter] = useState("");
+  const [hoveredId, setHoveredId] = useState(null); // Track hovered patient ID
 
   const uniqueInsuranceProviders = [...new Set(patientsData.map((p) => p.insurance_provider))];
   const uniqueDiseases = [...new Set(patientsData.map((p) => p.medical_Condition))];
@@ -182,8 +183,13 @@ const PatientSearch = ({ patientsData }) => {
       <div className="row mt-4">
         {filteredPatients.length > 0 ? (
           filteredPatients.map((patient) => (
-            <div key={patient.id} className="col-md-4">
-              <PatientCard patient={patient} />
+            <div
+              key={patient.id}
+              className="col-md-4"
+              onMouseEnter={() => setHoveredId(patient.id)}  // Set hover on mouse enter
+              onMouseLeave={() => setHoveredId(null)}  // Remove hover on mouse leave
+            >
+              <PatientCard patient={patient} isHovered={hoveredId === patient.id} />
             </div>
           ))
         ) : (

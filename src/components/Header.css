@@ -1,18 +1,19 @@
 /* Navbar Container */
 .navbar-custom {
-  background: #003366; /* Dark professional background */
+  background: #d44ab6; /* Dark professional background */
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
   padding: 0.5rem 2rem; /* Add more padding for a spacious look */
   border-radius: 5px;
+  left: auto;
   right: 16%;
-  width: 130%; /* Ensure the navbar takes full width */
+  width: 125%; /* Ensure the navbar takes full width */
   transition: background 0.3s ease, box-shadow 0.3s ease;
 }
 
-.navbar-custom:hover {
-  background: #dd39c7; /* Slightly lighter shade on hover */
-  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.2);
-}
+/* .navbar-custom:hover { */
+  /* background: #dd39c7; Slightly lighter shade on hover */
+  /* box-shadow: 0 6px 18px rgba(0, 0, 0, 0.2);
+} */
 
 /* Brand Styling */
 .navbar-custom .navbar-brand {
@@ -110,10 +111,10 @@
 }
 
 /* Second navbar container style */
-.navbar-custom {
-  background-color: #d44ab6; /* Dark background color */
-  padding: 0.8rem 1.5rem;
-}
+/* .navbar-custom {
+  background-color: #d44ab6; Dark background color */
+  /* padding: 0.8rem 1.5rem;
+} */
 
 .nav-link-custom {
   color: white;

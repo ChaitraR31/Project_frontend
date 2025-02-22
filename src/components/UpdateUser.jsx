@@ -75,51 +75,69 @@ const UpdateUser = () => {
 
   const handleDelete = async () => {
     if (window.confirm("Are you sure you want to delete your profile? This will also delete related data such as bookmarks.")) {
-      setLoading(true);
-      try {
+        setLoading(true);
+        const username = localStorage.getItem("username");
         const token = localStorage.getItem("token");
-  
-        // Step 1: Delete user's bookmarks
-        await axios.delete(`http://localhost:8085/bookmark/delete_bookmark/${username}`, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
-        toast.info("Bookmarks deleted successfully!");
-        console.log("Deleting profile...");
 
-        // Step 2: Delete the user's profile and associated data from multiple services
-        const deleteProfileRequests = [
-          axios.delete(`http://localhost:8087/user/delete/${username}`, {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }),
-          axios.delete(`http://localhost:8083/user/delete/${username}`, {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }),
-        ];
-  
-        await Promise.all(deleteProfileRequests);
-        toast.success("Profile and related data deleted successfully!");
-  
-        // Step 3: Clear user data from localStorage
-        localStorage.removeItem("username");
-        localStorage.removeItem("token");
-  
-        // Step 4: Redirect to the login page after deletion
-        navigate("/login"); // Redirect after successful deletion
-  
-      } catch (error) {
-        console.error("Error deleting profile:", error);
-        toast.error("Error deleting profile. Please try again.");
-      } finally {
-        setLoading(false);
-      }
+        try {
+            // Step 1: Delete user's bookmarks from all services
+            let bookmarkDeleted = false;
+            try {
+                await axios.delete(`http://localhost:8085/bookmark/delete_bookmark/${username}`, {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                });
+                bookmarkDeleted = true; // Set to true if bookmarks are successfully deleted
+            } catch (error) {
+                console.warn("No bookmarks found or error deleting bookmarks:", error);
+            }
+
+            // Step 2: Delete the profile regardless of bookmarks
+            await axios.all([
+                axios.delete(`http://localhost:8087/user/remove/${username}`, {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                }),
+                axios.delete(`http://localhost:8083/user/delete/${username}`, {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                }),
+            ]);
+
+            // If bookmarks were deleted, inform the user, else just confirm profile deletion
+            if (bookmarkDeleted) {
+                toast.info("Bookmarks and profile deleted successfully!");
+            } else {
+                toast.info("Profile deleted successfully (no bookmarks found).");
+            }
+
+            // Step 3: Clear user data from localStorage
+            localStorage.removeItem("username");
+            localStorage.removeItem("token");
+
+            // Set success message and redirect to login page
+            toast.success("Account successfully deleted from all services.");
+
+            // Redirect to login page after a short delay for the success message
+            setTimeout(() => {
+              window.location.reload();  // This will refresh the current page
+
+                navigate("/login");
+            }, 2000); // Adding delay for the success message to be visible
+
+        } catch (error) {
+            console.error("Error deleting profile:", error);
+            toast.error("Error deleting profile. Please try again.");
+        } finally {
+            setLoading(false);
+        }
     }
-  };
+};
+
+
   
 
   // const handleDelete = async () => {

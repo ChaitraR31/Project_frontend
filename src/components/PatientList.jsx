@@ -42,7 +42,12 @@ function PatientList() {
   return (
     <div >
       {/* Pass patientArr instead of patients */}
-      <PatientSearch2 patientsData={patientArr}/>
+      <PatientSearch2 patientsData={patientArr}
+      hoveredId={hoveredId} 
+      setHoveredId={setHoveredId} 
+      
+      
+      />
       {/* <PatientCard patienta={patient} isHovered={hoveredId === patient.id} /> */}
 
       {/* <h1 className="text-center mb-4">Patient Records</h1>
@@ -60,8 +65,8 @@ function PatientList() {
       </div> */}
       <div className="d-flex justify-content-center">
         <ReactPaginate
-          previousLabel={"previous"}
-          nextLabel={"next"}
+          previousLabel={"Previous"}
+          nextLabel={"Next"}
           breakLabel={"..."}
           breakClassName={"break-me"}
           pageCount={pageCount}

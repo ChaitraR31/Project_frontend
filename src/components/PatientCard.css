@@ -1,99 +1,132 @@
 /* Base styling for the patient card */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+
+
 .patient-card {
-    max-width: 400px;
-    margin: 10px;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  max-width: 400px;
+  margin: 10px auto;
+  width: 100%;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  height: auto;
+  background: url('/home/zadmin/Documents/react_v1/assert/bg9.jpg') no-repeat center center ;
+  background-size: cover;  /* Ensures the background image covers the entire card */
+
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Highlight effect when hovered */
+.patient-card.highlight {
+  transform: scale(1.05);
+  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2);
+  opacity: 1;
+}
+
+/* Dim effect when not hovered */
+.patient-card.dim {
+  transform: scale(1);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Style for the card body */
+.card-body {
+  font-family: 'Arial', sans-serif;
+  background-size: cover;  /* Ensures the image covers the entire card */
+  background-attachment: scroll;  /* Ensures the background moves with the card */
+  padding: 20px;  /* Adjust as needed */
+  position: relative;
+  height: auto;
+
+}
+
+
+
+/* Card title */
+.card-title {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-bottom: 15px;
+  color: #ddcdcd;
+}
+
+/* Text styling for the details */
+.card-text {
+  font-size: 1rem;
+  margin-bottom: 10px;
+  color: #5e3434;
+}
+
+/* Strong label for the text */
+.card-text strong {
+  color: #bd16af;
+}
+
+/* Button styling */
+.btn {
+  background-color: #4534db;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+.btn-primary {
+  background-color: #4534db;  /* Change to your preferred color */
+  color: white;
+}
+.btn:hover {
+  background-color: #2980b9;
+  transform: scale(1.05);
+}
+.btn-primary:hover {
+  background-color: #b33636;  /* Darker shade for hover effect */
+  transform: scale(1.05);  /* Optional: Add a scale effect on hover */
+}
+
+.btn-primary:active {
+  background-color: #a22c2c;  /* Even darker shade when button is clicked */
+}
+
+/* Input styling */
+.form-control {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+}
+
+.form-control:focus {
+  border-color: #3498db;
+  outline: none;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .patient-card {
+    max-width: 100%;
+    padding: 15px;  /* Adjust padding for smaller screens */
+
   }
-  
-  /* Highlight effect when hovered */
-  .patient-card.highlight {
-    transform: scale(1.05);
-    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2);
-  }
-  
-  /* Dim effect when not hovered */
-  .patient-card.dim {
-    transform: scale(1);
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  }
-  
-  /* Style for the card body */
-  .card-body {
-    font-family: 'Arial', sans-serif;
-  }
-  
-  /* Card title */
+
   .card-title {
-    font-size: 1.5rem;
-    font-weight: bold;
-    margin-bottom: 15px;
-    color: #2c3e50;
+    font-size: 1.2rem;
   }
-  
-  /* Text styling for the details */
+
   .card-text {
-    font-size: 1rem;
-    margin-bottom: 10px;
-    color: #34495e;
+    font-size: 0.9rem;
   }
-  
-  /* Strong label for the text */
-  .card-text strong {
-    color: #2980b9;
-  }
-  
-  /* Button styling */
+
   .btn {
-    background-color: #3498db;
-    color: white;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    font-size: 1rem;
-    cursor: pointer;
-    transition: background-color 0.3s ease, transform 0.3s ease;
+    padding: 8px 16px;
+    font-size: 0.9rem;
   }
-  
-  .btn:hover {
-    background-color: #2980b9;
-    transform: scale(1.05);
-  }
-  
-  /* Input styling */
-  .form-control {
-    width: 100%;
-    padding: 10px;
-    margin-bottom: 10px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-  }
-  
-  .form-control:focus {
-    border-color: #3498db;
-    outline: none;
-  }
-  
-  /* Responsive design */
-  @media (max-width: 768px) {
-    .patient-card {
-      max-width: 100%;
-    }
-  
-    .card-title {
-      font-size: 1.2rem;
-    }
-  
-    .card-text {
-      font-size: 0.9rem;
-    }
-  
-    .btn {
-      padding: 8px 16px;
-      font-size: 0.9rem;
-    }
-  }
-  
-        
+}

@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import PatientCard from "./PatientCard";
 import "./PatientSearch2.css"; // Import custom styles
 import "@fortawesome/fontawesome-free/css/all.min.css"; // Import Font Awesome CSS
+import InsuranceChart from "./InsuranceChart";
 
 const PatientSearch = ({ patientsData }) => {
   const [searchQuery, setSearchQuery] = useState("");
@@ -23,9 +24,8 @@ const PatientSearch = ({ patientsData }) => {
   // Filtered patients based on search and filters
   const filteredPatients = patientsData
     .filter((patient) => {
-      const matchesSearch =
-        patient.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        patient.insurance_provider.toLowerCase().includes(searchQuery.toLowerCase());
+      const matchesSearch = patient.medical_Condition.toLowerCase().includes(searchQuery.toLowerCase());
+        
 
       const matchesInsurance = insuranceFilter ? patient.insurance_provider === insuranceFilter : true;
       const matchesGender = genderFilter ? patient.gender === genderFilter : true;
@@ -57,12 +57,12 @@ const PatientSearch = ({ patientsData }) => {
       <div className="row g-3">
         <div className="col-md-6">
           <label>
-            <i className="fas fa-search"></i> Search by Name / Insurance
+            <i className="fas fa-search"></i> Search by Disease
           </label>
           <input
             type="text"
             className="form-control"
-            placeholder="Enter name or insurance provider..."
+            placeholder="Enter Disease"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
           />
@@ -189,13 +189,16 @@ const PatientSearch = ({ patientsData }) => {
               onMouseEnter={() => setHoveredId(patient.id)}  // Set hover on mouse enter
               onMouseLeave={() => setHoveredId(null)}  // Remove hover on mouse leave
             >
-              <PatientCard patient={patient} isHovered={hoveredId === patient.id} />
+              {/* <PatientCard patient={patient} isHovered={hoveredId === patient.id} /> */}
             </div>
           ))
         ) : (
           <p className="text-center text-muted">No patients found matching the criteria.</p>
         )}
       </div>
+        {/* Display the Insurance Chart based on filtered patients */}
+      {filteredPatients.length > 0 && <InsuranceChart patientsData={filteredPatients} searchQuery={searchQuery} />}
+
     </div>
   );
 };

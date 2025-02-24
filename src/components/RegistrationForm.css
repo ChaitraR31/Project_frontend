@@ -1,79 +1,78 @@
-/* General Form Container with Glassmorphism */
+/* General form container styles */
 .registration-form-container {
-  background: rgba(255, 255, 255, 0.1); /* Semi-transparent white background */
-  backdrop-filter: blur(10px); /* Blur effect for glassmorphism */
-  padding: 2rem;
+  background-color: #fff;
+  padding: 30px;
   border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  border: 1px solid rgba(255, 255, 255, 0.2); /* Light border for the glass effect */
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); /* Added deeper shadow */
+  margin-top: 40px;
+  border: 1px solid #ddd; /* Optional: Adds a subtle border to the form */
+  background: '#fbfbfb';
+  opacity: 0.9;
 }
 
-/* Heading Styling */
-h3 {
-  font-family: 'Arial', sans-serif;
-  font-weight: bold;
-  color: #333;
-  font-size: 1.8rem;
-}
-
-/* Form Label Styling */
+/* Label Styles - Ensuring visibility */
 .form-label {
-  font-size: 1rem;
-  font-weight: 500;
-  color: #333;
+  font-weight: bold;
+  color: #495057 !important; /* Ensures the label color is dark */
+  font-size: 14px; /* Optional: Adjusting label font size for better visibility */
+  display: block; /* Ensures label is displayed as a block */
+  margin-bottom: 5px; /* Adds space below the label */
 }
 
-/* Input Fields Styling */
+/* Input field styles */
 .input-field {
-  background-color: rgba(248, 249, 250, 0.8); /* Slight transparency for input fields */
-  border: 1px solid #ccc;
-  border-radius: 6px;
-  padding: 12px;
-  font-size: 1rem;
-  color: #333;
-  transition: all 0.3s ease;
+  border-radius: 5px;
+  padding: 10px;
+  font-size: 14px;
+  border: 1px solid #ced4da;
+  width: 100%; /* Ensures inputs take full width */
 }
 
-.input-field:focus {
-  background-color: #ffffff;
-  border-color: #007bff;
-  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
-  outline: none;
+/* Invalid input field styles */
+.input-field.is-invalid {
+  border-color: #dc3545;
 }
 
-/* Submit Button Styling */
+/* Error message styles */
+.error {
+  color: #dc3545;
+  font-size: 12px;
+  margin-top: 5px;
+}
+
+/* Submit Button */
 .submit-button {
-  font-size: 1.1rem;
   padding: 12px;
-  border-radius: 6px;
-  background: #e46bc9;
-  color: #fff;
+  font-size: 16px;
+  font-weight: bold;
+  background-color: #007bff;
   border: none;
-  font-weight: 600;
-  transition: all 0.3s ease;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
 }
 
 .submit-button:hover {
-  background: #b30086;
-  cursor: pointer;
+  background-color: #0056b3;
 }
 
-/* Responsive Styling */
-@media (max-width: 576px) {
-  .registration-form-container {
-    padding: 1.5rem;
-  }
-
-  h3 {
-    font-size: 1.6rem;
-  }
-
-  .input-field {
-    padding: 10px;
-  }
+/* Toast styles */
+.Toastify__toast--success {
+  background-color: #28a745;
 }
 
-/* Body background styling */
-body {
-  background-color: #f9c5d1; /* Light pink background for the body */
+.Toastify__toast--error {
+  background-color: #dc3545;
+}
+
+/* Error Styling for Input Fields */
+.input-field.is-invalid {
+  border-color: #dc3545;
+}
+
+.input-field.is-invalid + .error {
+  display: block;
+  color: #dc3545;
+  font-size: 12px;
+  margin-top: 5px;
 }

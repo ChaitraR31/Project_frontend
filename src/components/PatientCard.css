@@ -3,9 +3,9 @@
 *::before,
 *::after {
   box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
-
-
 
 .patient-card {
   max-width: 400px;
@@ -15,9 +15,7 @@
   border-radius: 10px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   height: auto;
-  background: url('/home/zadmin/Documents/react_v1/assert/bg9.jpg') no-repeat center center ;
-  background-size: cover;  /* Ensures the background image covers the entire card */
-
+  background-size: cover; /* Ensures the background image covers the entire card */
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
@@ -37,34 +35,30 @@
 /* Style for the card body */
 .card-body {
   font-family: 'Arial', sans-serif;
-  background-size: cover;  /* Ensures the image covers the entire card */
-  background-attachment: scroll;  /* Ensures the background moves with the card */
-  padding: 20px;  /* Adjust as needed */
+  padding: 20px;
   position: relative;
   height: auto;
-
+  color: white; /* Default text color to make it readable on dark backgrounds */
 }
-
-
 
 /* Card title */
 .card-title {
   font-size: 1.5rem;
   font-weight: bold;
   margin-bottom: 15px;
-  color: #ddcdcd;
+  color: #f7f7f7;  /* Lighter text color */
 }
 
 /* Text styling for the details */
 .card-text {
   font-size: 1rem;
   margin-bottom: 10px;
-  color: #5e3434;
+  color: #000000; /* Lighter gray for better contrast on dark background */
 }
 
 /* Strong label for the text */
 .card-text strong {
-  color: #bd16af;
+  color: #050505; /* Golden color for emphasis */
 }
 
 /* Button styling */
@@ -78,21 +72,24 @@
   cursor: pointer;
   transition: background-color 0.3s ease, transform 0.3s ease;
 }
+
 .btn-primary {
-  background-color: #4534db;  /* Change to your preferred color */
+  background-color: #4534db;
   color: white;
 }
+
 .btn:hover {
   background-color: #2980b9;
   transform: scale(1.05);
 }
+
 .btn-primary:hover {
-  background-color: #b33636;  /* Darker shade for hover effect */
-  transform: scale(1.05);  /* Optional: Add a scale effect on hover */
+  background-color: #b33636;
+  transform: scale(1.05);
 }
 
 .btn-primary:active {
-  background-color: #a22c2c;  /* Even darker shade when button is clicked */
+  background-color: #a22c2c;
 }
 
 /* Input styling */
@@ -113,8 +110,7 @@
 @media (max-width: 768px) {
   .patient-card {
     max-width: 100%;
-    padding: 15px;  /* Adjust padding for smaller screens */
-
+    padding: 15px;
   }
 
   .card-title {
@@ -128,5 +124,24 @@
   .btn {
     padding: 8px 16px;
     font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .patient-card {
+    padding: 10px;
+  }
+
+  .card-title {
+    font-size: 1rem;
+  }
+
+  .card-text {
+    font-size: 0.8rem;
+  }
+
+  .btn {
+    padding: 8px 14px;
+    font-size: 0.85rem;
   }
 }

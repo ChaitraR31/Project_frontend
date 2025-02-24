@@ -1,0 +1,39 @@
+.chart-container {
+  background-color: #F4F7FC; /* Light background for the chart container */
+  border-radius: 12px; /* Rounded corners */
+  padding: 20px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Soft shadow for the container */
+  margin: 20px auto;
+  width: 100%; /* Make it responsive, fill the available width */
+}
+.chart-container h3 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 20px;
+  text-align: center; /* Center the title */
+}
+.chart-container .pie-chart {
+  width: 100%; /* Ensure full width within the container */
+  height: auto;
+  max-height: 300px; /* Control max height of the chart */
+  min-height: 200px; /* Set a minimum height to ensure chart visibility */
+}
+/* Hover effects for chart labels */
+.chart-container .legend-item {
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+.chart-container .legend-item:hover {
+  color: #FF5733; /* Highlight color on hover */
+}
+/* Responsive Design: Make the chart responsive on smaller screens */
+@media (max-width: 768px) {
+  .chart-container {
+    width: 90%;
+    padding: 15px;
+  }
+  .chart-container .pie-chart {
+    max-height: 250px; /* Decrease the max height on smaller screens */
+  }
+}

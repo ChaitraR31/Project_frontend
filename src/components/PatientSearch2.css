@@ -1,60 +1,60 @@
-.patient-search {
-    padding: 20px;
-    border-radius: 8px;
-  }
-  
-  .patient-search label {
-    font-weight: bold;
-  }
-  
-  .patient-search .form-control {
-    border-radius: 6px;
-    font-size: 14px;
-  }
-  
-  .text-muted {
-    font-size: 16px;
-    font-weight: bold;
-  }
-  
-
-/* side bar */
-/* .patient-search-container {
+/* Layout */
+.patient-search-container {
   display: flex;
-} */
+  justify-content: space-between;
+}
 
-/* .sidebar {
-  position: fixed;
-  top: 0;
-  left: -300px; Initially hide sidebar */
-  /* width: 300px;
-  height: 100vh;
+.sidebar {
+  width: 300px;
+  padding: 20px;
   background-color: #f8f9fa;
+  border-right: 1px solid #ddd;
+  height: 100vh;
+}
+
+.patient-search {
+  flex-grow: 1;
   padding: 20px;
-  transition: left 0.3s ease-in-out;
 }
 
-.sidebar.open {
-  left: 0;
-} */
-/* 
-.sidebar-toggle-btn {
-  position: fixed;
-  top: 20px;
-  left: 20px;
-  z-index: 1000;
-  padding: 10px 20px;
-  background-color: #007bff;
-  color: white;
-  border: none;
-  cursor: pointer;
+.patient-search .row {
+  margin-bottom: 1.5rem;
 }
 
-.sidebar h4 {
-  text-align: center;
+/* Styling for cards */
+.patient-card {
+  border: 1px solid #ddd;
+  padding: 10px;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease-in-out;
 }
 
-.patient-cards-container {
-  margin-left: 320px;
-  padding: 20px;
-} */
+.patient-card:hover {
+  transform: scale(1.05);
+}
+
+.patient-card img {
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  margin-right: 10px;
+}
+
+.patient-card .patient-name {
+  font-weight: bold;
+}
+
+.patient-card .patient-info {
+  font-size: 14px;
+}
+
+.patient-card .patient-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.patient-card .patient-actions button {
+  font-size: 14px;
+}

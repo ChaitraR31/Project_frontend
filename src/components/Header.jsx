@@ -1,66 +1,86 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
-import { Link, useNavigate } from 'react-router-dom';
-import { useAuth } from '../services/AuthContext'; // Assuming your AuthContext provides user info
-import { FaUserAlt, FaSignOutAlt, FaCog, FaSearch } from 'react-icons/fa'; // Icons for aesthetic design
-import './Header.css'; // Import the new CSS file for styles
-import BookmarkedPatients from './BookmarkedPatients';
-import "react-toastify/dist/ReactToastify.css";
+import { Link, useNavigate, useLocation } from 'react-router-dom';
+import { useAuth } from '../services/AuthContext';
+import { FaUserPlus, FaSignInAlt, FaSignOutAlt } from 'react-icons/fa';
 import { toast, ToastContainer } from "react-toastify";
 
 function Header() {
-  const { isLoggedIn, logout, user } = useAuth(); // Assuming 'user' contains the logged-in user's data
+  const { isLoggedIn, logout, user } = useAuth();
   const nav = useNavigate();
+  const location = useLocation(); // Get current location (URL)
   const [searchQuery, setSearchQuery] = useState('');
 
   const handleLogout = () => {
     toast.success("Logged out successfully");
     logout();
-    nav('/login'); // Redirect to login page after logout
-
+    nav('/login');
   };
 
   const handleSearchChange = (e) => {
     setSearchQuery(e.target.value);
   };
 
-  // Handle "Home" click: if logged in, redirect to PatientList
   const handleHomeClick = () => {
     if (isLoggedIn) {
-      BookmarkedPatients(); // Call function to bookmark patient
-      nav('/patient-list'); // Redirect to PatientList if logged in
+      nav('/patient-list');
     } else {
-      nav('/'); // Redirect to home page if not logged in
+      nav('/');
     }
   };
 
+  const getActiveLinkStyle = (path) => {
+    return location.pathname === path
+      ? { 
+          background: 'linear-gradient(135deg, #4e73df, #1e3d93)', // Blue gradient for active link
+          color: 'white', // Ensure the text is white for visibility
+          borderRadius: '8px',
+          border: '1px solid transparent' // Remove border when active
+        } 
+      : {};
+  };
+
   return (
-    <Navbar collapseOnSelect expand="lg" variant="dark" className="navbar-custom">
+    <Navbar collapseOnSelect expand="lg" variant="light" className="sticky-top" style={{ background: 'white', boxShadow: '0px 4px 10px rgba(0, 0, 0, 0.1)' }}>
       <Container>
         <Navbar.Brand
           as="div"
-          className="fw-bold fs-3 text-white"
-          style={{ fontFamily: "'Roboto', sans-serif", fontWeight: '700', cursor: 'pointer' }}
+          className="fw-bold fs-3 text-dark"
+          style={{ fontFamily: "'Merriweather', serif", cursor: 'pointer', marginLeft: 'auto' }}
           onClick={handleHomeClick}
         >
-          Treatment-Tracer
+          Insurance Efficiency
         </Navbar.Brand>
 
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav">
-          <Nav className="me-auto">
-            <Nav.Link as={Link} to="/" className="nav-link-custom">Home</Nav.Link>
-            <Nav.Link as={Link} to="/about" className="nav-link-custom">About</Nav.Link>
+          <Nav className="me-auto ms-5">
+            <Nav.Link 
+              as={Link} 
+              to="/" 
+              className="btn-link border-1 rounded-3 ms-2 me-2 text-decoration-none" 
+              style={{ ...getActiveLinkStyle('/'), border: '1px solid #ddd', padding: '10px 15px' }} // Added padding to the button
+            >
+              Home
+            </Nav.Link>
+            <Nav.Link 
+              as={Link} 
+              to="/about" 
+              className="btn-link border-1 rounded-3 ms-3 text-decoration-none" 
+              style={{ ...getActiveLinkStyle('/about'), border: '1px solid #ddd', padding: '10px 15px' }} // Added padding to the button
+            >
+              About
+            </Nav.Link>
 
             {isLoggedIn && (
               <NavDropdown
-                title={<span className="d-flex align-items-center"><FaUserAlt className="me-2" /> {user?.username || 'Profile'}</span>}
+                title={<span className="d-flex align-items-center">{user?.username || 'Profile'}</span>}
                 id="collapsible-nav-dropdown"
+                className=""
               >
-                {/* Display the username as the first item */}
                 <NavDropdown.Item disabled>
                   <strong>{user?.username}</strong>
                 </NavDropdown.Item>
@@ -68,36 +88,60 @@ function Header() {
                   Update Profile
                 </NavDropdown.Item>
                 <NavDropdown.Item>
-                  <FaCog className="me-2" /> Settings
+                  Settings
                 </NavDropdown.Item>
                 <NavDropdown.Divider />
                 <NavDropdown.Item onClick={handleLogout}>
-                  <FaSignOutAlt className="me-2" /> Logout
+                  <FaSignOutAlt className="me-2" />
+                  Logout
                 </NavDropdown.Item>
               </NavDropdown>
             )}
           </Nav>
 
           {isLoggedIn && (
-            <Nav.Link as={Link} to="/bookmarked-patients" className="nav-link-custom">My Bookings</Nav.Link>
+            <Nav.Link 
+              as={Link} 
+              to="/bookmarked-patients" 
+              className="btn-link border-1 rounded-3 text-decoration-none" 
+              style={{ ...getActiveLinkStyle('/bookmarked-patients'), border: '1px solid #ddd', padding: '10px 15px' }}
+            >
+              My Bookings
+            </Nav.Link>
           )}
 
-          <Nav className="ml-auto">
+          <Nav className="ms-auto">
             {!isLoggedIn ? (
               <>
-                <Nav.Link as={Link} to="/register" className="nav-link-custom">Register</Nav.Link>
-                <Nav.Link as={Link} to="/login" className="nav-link-custom">Login</Nav.Link>
+                <Nav.Link 
+                  as={Link} 
+                  to="/register" 
+                  className="btn-link border-1 rounded-3 me-2 text-decoration-none" 
+                  style={{ ...getActiveLinkStyle('/register'), border: '1px solid #ddd', padding: '10px 15px' }}
+                >
+                  <FaUserPlus className="me-2" />
+                  Register
+                </Nav.Link>
+                <Nav.Link 
+                  as={Link} 
+                  to="/login" 
+                  className="btn-link border-1 rounded-3 ms-2 text-decoration-none" 
+                  style={{ ...getActiveLinkStyle('/login'), border: '1px solid #ddd', padding: '10px 15px' }}
+                >
+                  <FaSignInAlt className="me-2" />
+                  Login
+                </Nav.Link>
               </>
             ) : (
-              <Nav.Link onClick={handleLogout} className="nav-link-custom" style={{ cursor: 'pointer' }}>
-                <FaSignOutAlt className="me-2" /> Logout
+              <Nav.Link onClick={handleLogout} className="btn-link border-1 rounded-3 text-decoration-none" style={{ cursor: 'pointer', padding: '10px 15px' }}>
+                <FaSignOutAlt className="me-2" />
+                Logout
               </Nav.Link>
             )}
           </Nav>
         </Navbar.Collapse>
       </Container>
       <ToastContainer />
-
     </Navbar>
   );
 }

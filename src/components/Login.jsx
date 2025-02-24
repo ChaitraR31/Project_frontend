@@ -25,16 +25,17 @@ function Login() {
     if (token) {
       // If a token exists, skip the login process and navigate accordingly
       navigate("/bookmarked-patients", { replace: true });
-  
+
       const redirectAfterLogin = localStorage.getItem("redirectAfterLogin");
-  
+
       if (redirectAfterLogin) {
-        const patientData = JSON.parse(localStorage.getItem("patientToBookmark"));
-        if (patientData) {
-          addToBookMark(patientData);
-          localStorage.removeItem("patientToBookmark"); 
+        const provider = JSON.parse(localStorage.getItem("patientToBookmark"));
+        if (provider) {
+          // addToBookMark(provider);
+          // localStorage.removeItem("patientToBookmark");
+          console.log("Patient to bookmark after login: ", provider);
         }
-        localStorage.removeItem("redirectAfterLogin"); 
+        localStorage.removeItem("redirectAfterLogin");
       }
     }
   }, [navigate]);
@@ -53,20 +54,20 @@ function Login() {
           headers: { Authorization: `Bearer ${token}` },
         }
       );
-  
+
       const existingBookmarks = existingBookmarksResponse.data;
-  
+
       // Check if the bookmark already exists
       const isBookmarked = existingBookmarks.some(
         (bookmark) => bookmark.id === patient.id
       );
-  
+
       if (isBookmarked) {
         // If the bookmark already exists, show a message
         toast.info("This patient is already bookmarked!");
         return;
       }
-  
+
       // Proceed to add the bookmark if it doesn't already exist
       await axios.post(
         `http://localhost:8085/bookmark/add_bookmark`,
@@ -86,7 +87,7 @@ function Login() {
           medication: patient.medication,
           testResult: patient.test_results,
           id: patient.id,
-          userName: formData.username, 
+          userName: formData.username,
         },
         {
           headers: {
@@ -131,15 +132,15 @@ function Login() {
             navigate("/", { replace: true });
           });
 
-        const redirectAfterLogin = localStorage.getItem("redirectAfterLogin");
-        if (redirectAfterLogin) {
-          const patientData = JSON.parse(localStorage.getItem("patientToBookmark"));
-          if (patientData) {
-            addToBookMark(patientData);
-            toast.success("Patient bookmarked successfully after login!");
-          }
-          localStorage.removeItem("patientToBookmark");
-        }
+        // const redirectAfterLogin = localStorage.getItem("redirectAfterLogin");
+        // if (redirectAfterLogin) {
+        //   const patientData = JSON.parse(localStorage.getItem("patientToBookmark"));
+        //   if (patientData) {
+        //     addToBookMark(patientData);
+        //     toast.success("Patient bookmarked successfully after login!");
+        //   }
+        //   localStorage.removeItem("patientToBookmark");
+        // }
       })
       .catch((error) => {
         toast.error("Login Failed! Please check your credentials.");
@@ -156,23 +157,34 @@ function Login() {
   };
 
   return (
-    <div className="login-container" style={{
+    <div className="login-container" 
+    style={{
       height: "100vh",
       display: "flex",
       justifyContent: "center",
       alignItems: "center",
-    }}>
+      color:"black"
+    }}
+    >
+
+
       <Container>
         <Row className="justify-content-md-center">
           <Col md={6}>
-            <div className="login-box" 
+            <div className="login-box"
               style={{
-                background: "rgba(255, 255, 255, 0.1)",
+                //background: "#f8f9fa",  // Soft white-grey background
+                background: '#fbfbfb',
+                opacity: 0.9,
+            
                 borderRadius: "15px",
                 padding: "30px",
-                boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
-                backdropFilter: "blur(10px)",
-                border: "1px solid rgba(255, 255, 255, 0.2)",
+                
+                boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",  // Light shadow for depth
+                border: "1px solid #e0e0e0",  // Soft border
+
+                
+
               }}>
               <h3 className="text-center mb-4">Login</h3>
               <Form onSubmit={handleSubmit}>
@@ -200,9 +212,25 @@ function Login() {
                     <Button
                       variant="outline-secondary"
                       onClick={() => setShowPassword(!showPassword)}
+                      style={{
+                        borderColor: showPassword ? "#28a745" : "#007bff", // Border color based on visibility
+                        padding: "5px", // Adjust padding for compactness
+                        borderRadius: "0 20px 20px 0", // Rounded corners on the right side
+                        backgroundColor: "#f1f1f1", // Light background
+                        width: "40px", // Fixed width to fit the button size with input
+                        display: "flex", // Flexbox to center the icon
+                        alignItems: "center", // Vertically center
+                        justifyContent: "center", // Horizontally center
+                        height: "38px", // Ensure button height matches input height
+                      }}
                     >
-                      {showPassword ? <FaEyeSlash /> : <BsEye />}
+                      {showPassword ? (
+                        <i className="fa fa-eye-slash" style={{ color: "#007bff", fontSize: "18px" }} /> // Closed eye
+                      ) : (
+                        <i className="fa fa-eye" style={{ color: "black", fontSize: "18px" }} /> // Open eye
+                      )}
                     </Button>
+
                   </InputGroup>
                 </Form.Group>
 
@@ -225,7 +253,8 @@ function Login() {
         </Row>
       </Container>
       <ToastContainer />
-    </div>
+    </div >
+
   );
 }
 

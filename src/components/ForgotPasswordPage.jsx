@@ -42,7 +42,7 @@ const ForgotPasswordPage = () => {
 
   return (
     <div>
-      <div className="forgot-password-container">
+      <div className="forgot-password-container" >
         <div className="forgot-password-card">
           <h2 className="heading">Forgot Password</h2>
           <p className="subheading">Enter your username to reset your password</p>

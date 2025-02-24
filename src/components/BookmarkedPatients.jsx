@@ -12,26 +12,63 @@ function BookmarkedPatients() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const token = localStorage.getItem("token");
-    if (token) {
-      const username = localStorage.getItem("username");
-      if (username) {
-        axios
-          .get(`http://localhost:8085/bookmark/get/${username}`, {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          })
-          .then((response) => {
+    async function fetchData() {
+      const token = localStorage.getItem("token");
+      if (token) {
+        const username = localStorage.getItem("username");
+        if (username) {
+          try {
+            const response = await axios.get(`http://localhost:8085/bookmark/get/${username}`, {
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+            });
             console.log("Fetched Bookmarked Patients: ", response.data);
             setBookmarkedPatients(response.data);
-          })
-          .catch((error) => {
+  
+            const provider = JSON.parse(localStorage.getItem("providerToBookmark"));
+            localStorage.removeItem("providerToBookmark");
+            console.log("Provider to bookmark after login: ", provider);
+            if (provider) {
+              console.log("Provider to bookmark after login: ", provider);
+              // Add the provider to bookmarks after login
+              await axios.post(
+                `http://localhost:8085/bookmark/add_bookmark`,
+                {
+                  age: provider.age,
+                  gender: provider.gender,
+                  bloodType: provider.blood_type,
+                  medicalCondition: provider.medical_Condition,
+                  dateAdmission: provider.date_admission,
+                  doctor: provider.doctor,
+                  hospital: provider.hospital,
+                  insuranceProvider: provider.insurance_provider,
+                  billingAmount: provider.billing_amount,
+                  roomNumber: provider.room_number,
+                  admissionType: provider.admission_type,
+                  dischargeDate: provider.discharge_date,
+                  medication: provider.medication,
+                  testResult: provider.test_results,
+                  id: provider.id,
+                  userName: username,
+                },
+                {
+                  headers: { Authorization: `Bearer ${token}` },
+                }
+              );
+              // Remove from localStorage after it's added
+              localStorage.removeItem("providerToBookmark");
+            }
+          } catch (error) {
             console.error("Error fetching bookmarked patients:", error);
-          });
+          }
+        }
       }
     }
+  
+    fetchData();
   }, []);
+  
   
   const handleViewMore = (patient) => {
     setSelectedPatient(patient);
@@ -87,7 +124,8 @@ function BookmarkedPatients() {
               <Card.Body>
                 <Card.Title>{patient.medicalCondition}</Card.Title>
                 <Card.Text>
-                  <strong>Age:</strong> {patient.age} <br />
+                <strong>Billing Amount:</strong> {patient.billingAmount}<br/>
+
                   <strong>Hospital:</strong> {patient.hospital}<br/>
                   <strong>Insurance Provider:</strong> {patient.insuranceProvider}<br/>
                   <strong>Doctor:</strong> {patient.doctor}
@@ -108,7 +146,7 @@ function BookmarkedPatients() {
         </Modal.Header>
         <Modal.Body>
           {selectedPatient && (
-            <div>
+            <div >
               <p><strong>Age:</strong> {selectedPatient.age}</p>
               <p><strong>Gender:</strong> {selectedPatient.gender}</p>
               <p><strong>Medical Condition:</strong> {selectedPatient.medicalCondition}</p>
@@ -120,6 +158,9 @@ function BookmarkedPatients() {
               <p><strong>Admission Type:</strong> {selectedPatient.admissionType}</p>
               <p><strong>Medication:</strong> {selectedPatient.medication}</p>
               <p><strong>Discharge Date:</strong> {selectedPatient.dischargeDate}</p>
+              <p><strong>Billing Amount:</strong> {selectedPatient.billingAmount}</p>
+
+
               <p><strong>Blood Type:</strong> {selectedPatient.bloodType}</p>
             </div>
           )}

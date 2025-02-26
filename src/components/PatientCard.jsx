@@ -7,8 +7,8 @@ import './PatientCard.css'; // Custom CSS for styling
 
 function PatientCard({ patient, isHovered }) {
   const navigate = useNavigate(); 
-  const token = localStorage.getItem('token');
-  const userName = localStorage.getItem('username');
+  const token = sessionStorage.getItem('token');
+  const userName = sessionStorage.getItem('username');
   const [isBookmarked, setIsBookmarked] = useState(false); 
 
   useEffect(() => {
@@ -33,8 +33,8 @@ function PatientCard({ patient, isHovered }) {
 
   const addToBookMark = async (patient) => {
     if (!userName) {
-      localStorage.setItem('redirectAfterLogin', 'true');
-      localStorage.setItem('patientToBookmark', JSON.stringify(patient));
+      sessionStorage.setItem('redirectAfterLogin', 'true');
+      sessionStorage.setItem('patientToBookmark', JSON.stringify(patient));
       navigate('/login');
       return;
     }

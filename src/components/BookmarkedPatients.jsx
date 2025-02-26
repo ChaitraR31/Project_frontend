@@ -1,21 +1,24 @@
 import React, { useState, useEffect } from "react";
-import { Card, Button, Row, Col, Modal } from "react-bootstrap";
+import { Card, Button, Row, Col, Modal, Form } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { toast } from "react-toastify";
 
 function BookmarkedPatients() {
   const [bookmarkedPatients, setBookmarkedPatients] = useState([]);
+  const [filteredPatients, setFilteredPatients] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [selectedPatient, setSelectedPatient] = useState(null);
   const [showUpdateDeleteButtons, setShowUpdateDeleteButtons] = useState(false); // New state to manage button visibility
+  const [search, setSearch] = useState(""); // Search input state
+  const [sortOrder, setSortOrder] = useState("asc"); // Default sorting to ascending
   const navigate = useNavigate();
 
   useEffect(() => {
     async function fetchData() {
-      const token = localStorage.getItem("token");
+      const token = sessionStorage.getItem("token");
       if (token) {
-        const username = localStorage.getItem("username");
+        const username = sessionStorage.getItem("username");
         if (username) {
           try {
             const response = await axios.get(`http://localhost:8085/bookmark/get/${username}`, {
@@ -25,9 +28,10 @@ function BookmarkedPatients() {
             });
             console.log("Fetched Bookmarked Patients: ", response.data);
             setBookmarkedPatients(response.data);
-  
-            const provider = JSON.parse(localStorage.getItem("providerToBookmark"));
-            localStorage.removeItem("providerToBookmark");
+            setFilteredPatients(response.data); // Initially set filtered list to all patients
+
+            const provider = JSON.parse(sessionStorage.getItem("providerToBookmark"));
+            sessionStorage.removeItem("providerToBookmark");
             console.log("Provider to bookmark after login: ", provider);
             if (provider) {
               console.log("Provider to bookmark after login: ", provider);
@@ -56,8 +60,8 @@ function BookmarkedPatients() {
                   headers: { Authorization: `Bearer ${token}` },
                 }
               );
-              // Remove from localStorage after it's added
-              localStorage.removeItem("providerToBookmark");
+              // Remove from sessionStorage after it's added
+              sessionStorage.removeItem("providerToBookmark");
             }
           } catch (error) {
             console.error("Error fetching bookmarked patients:", error);
@@ -65,11 +69,33 @@ function BookmarkedPatients() {
         }
       }
     }
-  
+
     fetchData();
   }, []);
-  
-  
+
+  useEffect(() => {
+    // Filter patients based on search
+    let filtered = bookmarkedPatients;
+    if (search) {
+      filtered = filtered.filter(
+        (patient) =>
+          patient.medicalCondition.toLowerCase().includes(search.toLowerCase()) ||
+          patient.insuranceProvider.toLowerCase().includes(search.toLowerCase())
+      );
+    }
+
+    // Sort the filtered list based on sortOrder
+    filtered.sort((a, b) => {
+      if (sortOrder === "asc") {
+        return a.billingAmount - b.billingAmount;
+      } else {
+        return b.billingAmount - a.billingAmount;
+      }
+    });
+
+    setFilteredPatients(filtered); // Set the filtered and sorted list
+  }, [search, sortOrder, bookmarkedPatients]);
+
   const handleViewMore = (patient) => {
     setSelectedPatient(patient);
     setShowModal(true);
@@ -82,16 +108,8 @@ function BookmarkedPatients() {
     setShowUpdateDeleteButtons(false); // Hide buttons when modal is closed
   };
 
-  const handleUpdate = (patient) => {
-    if (patient && patient.userName && patient.bookmarkId) {
-      navigate(`/update-bookmark/${patient.userName}/${patient.bookmarkId}`, { state: { patient } });
-    } else {
-      console.error("Invalid patient data for update.");
-    }
-  };
-
   const handleDelete = (patient) => {
-    const token = localStorage.getItem("token"); // Get token from localStorage
+    const token = sessionStorage.getItem("token"); // Get token from sessionStorage
     if (token) {
       axios
         .delete(`http://localhost:8085/bookmark/delete_bookmark/${patient.userName}/${patient.bookmarkId}`, {
@@ -113,21 +131,48 @@ function BookmarkedPatients() {
         });
     }
   };
-  
+
+  // Handle input change for search
+  const handleSearchChange = (e) => {
+    setSearch(e.target.value);
+  };
+
+  // Toggle sort order (ascending/descending)
+  const toggleSortOrder = () => {
+    setSortOrder((prev) => (prev === "asc" ? "desc" : "asc"));
+  };
 
   return (
     <div style={{ marginTop: "20px" }}>
+      <Form className="mb-4">
+        <Form.Group controlId="search">
+          <Form.Label>Search by Medical Condition or Insurance Provider</Form.Label>
+          <Form.Control
+            type="text"
+            value={search}
+            onChange={handleSearchChange}
+            placeholder="Search"
+          />
+        </Form.Group>
+      </Form>
+
+      <Button variant="secondary" onClick={toggleSortOrder} className="mb-4">
+        Sort by Billing Amount ({sortOrder === "asc" ? "Low to High" : "High to Low"})
+      </Button>
+
       <Row>
-        {bookmarkedPatients.map((patient) => (
+        {filteredPatients.map((patient) => (
           <Col md={4} key={patient.bookmarkId} className="mb-4">
             <Card>
               <Card.Body>
                 <Card.Title>{patient.medicalCondition}</Card.Title>
                 <Card.Text>
-                <strong>Billing Amount:</strong> {patient.billingAmount}<br/>
-
-                  <strong>Hospital:</strong> {patient.hospital}<br/>
-                  <strong>Insurance Provider:</strong> {patient.insuranceProvider}<br/>
+                  <strong>Billing Amount:</strong> {patient.billingAmount}
+                  <br />
+                  <strong>Hospital:</strong> {patient.hospital}
+                  <br />
+                  <strong>Insurance Provider:</strong> {patient.insuranceProvider}
+                  <br />
                   <strong>Doctor:</strong> {patient.doctor}
                 </Card.Text>
                 <Button className="btn btn-primary" onClick={() => handleViewMore(patient)}>
@@ -146,7 +191,7 @@ function BookmarkedPatients() {
         </Modal.Header>
         <Modal.Body>
           {selectedPatient && (
-            <div >
+            <div>
               <p><strong>Age:</strong> {selectedPatient.age}</p>
               <p><strong>Gender:</strong> {selectedPatient.gender}</p>
               <p><strong>Medical Condition:</strong> {selectedPatient.medicalCondition}</p>
@@ -159,8 +204,6 @@ function BookmarkedPatients() {
               <p><strong>Medication:</strong> {selectedPatient.medication}</p>
               <p><strong>Discharge Date:</strong> {selectedPatient.dischargeDate}</p>
               <p><strong>Billing Amount:</strong> {selectedPatient.billingAmount}</p>
-
-
               <p><strong>Blood Type:</strong> {selectedPatient.bloodType}</p>
             </div>
           )}
@@ -168,9 +211,6 @@ function BookmarkedPatients() {
         <Modal.Footer>
           {showUpdateDeleteButtons && selectedPatient?.bookmarkId === selectedPatient?.bookmarkId && (
             <>
-              <Button className="btn btn-warning" onClick={() => handleUpdate(selectedPatient)}>
-                Update Bookmark
-              </Button>
               <Button className="btn btn-danger" onClick={() => handleDelete(selectedPatient)}>
                 Delete Bookmark
               </Button>

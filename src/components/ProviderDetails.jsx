@@ -14,13 +14,13 @@ function ProviderDetails() {
 
   // Function to add provider to bookmarks
   const addToBookmark = async (provider) => {
-    const token = localStorage.getItem("token");
-    const username = localStorage.getItem("username");
+    const token = sessionStorage.getItem("token");
+    const username = sessionStorage.getItem("username");
 
     if (!username) {
       // If the user is not logged in, redirect to the login page and store provider data for later
-      localStorage.setItem("redirectAfterLogin", "true");
-      localStorage.setItem("providerToBookmark", JSON.stringify(provider));
+      sessionStorage.setItem("redirectAfterLogin", "true");
+      sessionStorage.setItem("providerToBookmark", JSON.stringify(provider));
       toast.info("Please log in to bookmark this provider.");
       navigate("/login");
       return;
@@ -88,12 +88,12 @@ function ProviderDetails() {
 
   // Function to handle successful login and bookmark the provider
   const handleLoginSuccess = () => {
-    const provider = JSON.parse(localStorage.getItem("providerToBookmark"));
+    const provider = JSON.parse(sessionStorage.getItem("providerToBookmark"));
     if (provider) {
       // Add the provider to bookmarks after login
       addToBookmark(provider);
-      // Remove from localStorage after it's added
-      localStorage.removeItem("providerToBookmark");
+      // Remove from sessionStorage after it's added
+      sessionStorage.removeItem("providerToBookmark");
     }
   };
 
@@ -115,9 +115,9 @@ function ProviderDetails() {
 
   useEffect(() => {
     // Check if there's a redirect flag and handle login success
-    if (localStorage.getItem("redirectAfterLogin") === "true") {
+    if (sessionStorage.getItem("redirectAfterLogin") === "true") {
       handleLoginSuccess();
-      localStorage.removeItem("redirectAfterLogin");
+      sessionStorage.removeItem("redirectAfterLogin");
     }
   }, []);
 
@@ -139,6 +139,7 @@ function ProviderDetails() {
 
   return (
     <div className="container mt-4">
+      
       <h3 className="text-center mb-4" style={{ fontSize: '24px', fontWeight: 'bold' }}>
         Details for {providerName}
       </h3>

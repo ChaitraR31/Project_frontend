@@ -3,13 +3,13 @@ import { createContext, useContext, useEffect, useState } from "react";
 const AuthContext = createContext();
  
 export const AuthProvider = ({ children }) => {
-  const [isLoggedIn, setIsLoggedIn] = useState(!!localStorage.getItem("token"));
+  const [isLoggedIn, setIsLoggedIn] = useState(!!sessionStorage.getItem("token"));
   const [user, setUser] = useState('');
  
   useEffect(() => {
     const checkAuth = () => {
-      setIsLoggedIn(!!localStorage.getItem("token"));
-      const savedUser = localStorage.getItem("user");  // Check "user" key
+      setIsLoggedIn(!!sessionStorage.getItem("token"));
+      const savedUser = sessionStorage.getItem("user");  // Check "user" key
       if (savedUser) {
         try {
           setUser(JSON.parse(savedUser));
@@ -27,16 +27,16 @@ export const AuthProvider = ({ children }) => {
   }, []);
  
   const login = (token, userData) => {
-    localStorage.setItem("token", token);
-    localStorage.setItem("user", JSON.stringify(userData));  // Store under "user"
+    sessionStorage.setItem("token", token);
+    sessionStorage.setItem("user", JSON.stringify(userData));  // Store under "user"
     setIsLoggedIn(true);
     setUser(userData);
   };
  
   const logout = () => {
-    localStorage.removeItem("token");
-    localStorage.removeItem("user");
-    localStorage.removeItem("username");  // Remove "user"
+    sessionStorage.removeItem("token");
+    sessionStorage.removeItem("user");
+    sessionStorage.removeItem("username");  // Remove "user"
     setIsLoggedIn(false);
     setUser(null);
   };
@@ -57,13 +57,13 @@ export const useAuth = () => useContext(AuthContext);
 // const AuthContext = createContext();
 
 // export const AuthProvider = ({ children }) => {
-//   const [isLoggedIn, setIsLoggedIn] = useState(!!localStorage.getItem("token"));
+//   const [isLoggedIn, setIsLoggedIn] = useState(!!sessionStorage.getItem("token"));
 //   const [user, setUser] = useState('');
 
 //   useEffect(() => {
 //     const checkAuth = () => {
-//       setIsLoggedIn(!!localStorage.getItem("token"));
-//       const savedUser = localStorage.getItem("user");  // Check "user" key
+//       setIsLoggedIn(!!sessionStorage.getItem("token"));
+//       const savedUser = sessionStorage.getItem("user");  // Check "user" key
 //       if (savedUser) {
 //         try {
 //           setUser(JSON.parse(savedUser));
@@ -81,16 +81,16 @@ export const useAuth = () => useContext(AuthContext);
 //   }, []);
 
 //   const login = (token, userData) => {
-//     localStorage.setItem("token", token);
-//     localStorage.setItem("user", JSON.stringify(userData));  // Store under "user"
+//     sessionStorage.setItem("token", token);
+//     sessionStorage.setItem("user", JSON.stringify(userData));  // Store under "user"
 //     setIsLoggedIn(true);
 //     setUser(userData);
 //   };
 
 //   const logout = () => {
-//     localStorage.removeItem("token");
-//     localStorage.removeItem("user");  // Remove "user"
-//     localStorage.removeItem("username");  // Remove "user"
+//     sessionStorage.removeItem("token");
+//     sessionStorage.removeItem("user");  // Remove "user"
+//     sessionStorage.removeItem("username");  // Remove "user"
 //     setIsLoggedIn(false);
 //     setUser(null);
 //   };

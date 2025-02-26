@@ -21,21 +21,21 @@ function Login() {
 
   // Check if the user is already logged in when the component mounts
   useEffect(() => {
-    const token = localStorage.getItem("token");
+    const token = sessionStorage.getItem("token");
     if (token) {
       // If a token exists, skip the login process and navigate accordingly
       navigate("/bookmarked-patients", { replace: true });
 
-      const redirectAfterLogin = localStorage.getItem("redirectAfterLogin");
+      const redirectAfterLogin = sessionStorage.getItem("redirectAfterLogin");
 
       if (redirectAfterLogin) {
-        const provider = JSON.parse(localStorage.getItem("patientToBookmark"));
+        const provider = JSON.parse(sessionStorage.getItem("patientToBookmark"));
         if (provider) {
           // addToBookMark(provider);
-          // localStorage.removeItem("patientToBookmark");
+          // sessionStorage.removeItem("patientToBookmark");
           console.log("Patient to bookmark after login: ", provider);
         }
-        localStorage.removeItem("redirectAfterLogin");
+        sessionStorage.removeItem("redirectAfterLogin");
       }
     }
   }, [navigate]);
@@ -45,7 +45,7 @@ function Login() {
   };
 
   const addToBookMark = async (patient) => {
-    const token = localStorage.getItem("token");
+    const token = sessionStorage.getItem("token");
     try {
       // Get existing bookmarks for the user
       const existingBookmarksResponse = await axios.get(
@@ -104,12 +104,12 @@ function Login() {
   const handleSubmit = (e) => {
     e.preventDefault();
     axios
-      .post("http://localhost:8087/user/login", formData)
+      .post("http://localhost:8089/authuser/login", formData)
       .then((response) => {
         const token = response.data;
-        localStorage.setItem("token", token);
-        localStorage.setItem("user", JSON.stringify(formData));  // Store under "user" key
-        localStorage.setItem("username", formData.username);  // Store under "user" key
+        sessionStorage.setItem("token", token);
+        sessionStorage.setItem("user", JSON.stringify(formData));  // Store under "user" key
+        sessionStorage.setItem("username", formData.username);  // Store under "user" key
         login(token, formData);  // Pass user data along with token
         toast.success("Login Successful!");
 
@@ -132,14 +132,14 @@ function Login() {
             navigate("/", { replace: true });
           });
 
-        // const redirectAfterLogin = localStorage.getItem("redirectAfterLogin");
+        // const redirectAfterLogin = sessionStorage.getItem("redirectAfterLogin");
         // if (redirectAfterLogin) {
-        //   const patientData = JSON.parse(localStorage.getItem("patientToBookmark"));
+        //   const patientData = JSON.parse(sessionStorage.getItem("patientToBookmark"));
         //   if (patientData) {
         //     addToBookMark(patientData);
         //     toast.success("Patient bookmarked successfully after login!");
         //   }
-        //   localStorage.removeItem("patientToBookmark");
+        //   sessionStorage.removeItem("patientToBookmark");
         // }
       })
       .catch((error) => {

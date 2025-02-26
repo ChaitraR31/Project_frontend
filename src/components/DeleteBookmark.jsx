@@ -11,7 +11,7 @@ function DeleteBookmark() {
 
   const handleDelete = async () => {
     setLoading(true);
-    const token = localStorage.getItem("token");
+    const token = sessionStorage.getItem("token");
     try {
       await axios.delete(`http://localhost:8085/bookmark/delete_bookmark/${userName}/${bookmarkId}`, {
         headers: {

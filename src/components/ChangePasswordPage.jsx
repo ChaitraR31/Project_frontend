@@ -31,7 +31,7 @@ const ChangePasswordPage = () => {
 
     try {
       // Send a request to the backend to update the password
-      const response = await fetch(`http://localhost:8087/user/changepassword`, {
+      const response = await fetch(`http://localhost:8089/authuser/changepassword`, {
         method: "POST", // or PATCH depending on your API
         body: JSON.stringify({
           username,

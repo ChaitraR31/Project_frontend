@@ -2,16 +2,20 @@ import React, { useState, useMemo, useEffect, useRef } from 'react';
 import { Pie } from 'react-chartjs-2';
 import { Bar } from 'react-chartjs-2';
 import { Chart as ChartJS, Title, Tooltip, Legend, ArcElement, CategoryScale, LinearScale, BarElement } from 'chart.js';
-import { Container, Row, Col, Button, InputGroup, FormControl } from 'react-bootstrap';
+import { Container, Row, Col, Button, InputGroup, FormControl, Form } from 'react-bootstrap';
 import '/home/zadmin/Desktop/React_webapp/react_v1/src/components/InsuarnceChart.css';
+
 ChartJS.register(Title, Tooltip, Legend, ArcElement, CategoryScale, LinearScale, BarElement);
+
 const InsuranceChart = ({ searchQuery }) => {
   const [activeChart, setActiveChart] = useState("insurance");
   const [patientsData, setPatientsData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [hospitalRange, setHospitalRange] = useState(0); // State for controlling slider
+  const [insuranceQuery, setInsuranceQuery] = useState(''); // Insurance provider search query
   const chartRef = useRef(null);
+
   // Function to determine the light color based on billing amount
   const getColorForBillingAmount = (billingAmount, minBilling, maxBilling) => {
     const normalized = (billingAmount - minBilling) / (maxBilling - minBilling);
@@ -20,6 +24,7 @@ const InsuranceChart = ({ searchQuery }) => {
     const blue = 200;
     return `rgb(${red + 150}, ${green + 150}, ${blue})`;
   };
+
   // Fetch patients data from an external API
   useEffect(() => {
     const fetchPatientsData = async () => {
@@ -39,16 +44,27 @@ const InsuranceChart = ({ searchQuery }) => {
     };
     fetchPatientsData();
   }, []);
-  // Filter patients based on the searchQuery (disease name)
-  const filteredPatients = useMemo(() => {
-    if (!searchQuery) return patientsData;
-    return patientsData.filter((patient) =>
-      (patient.medical_Condition || '').toLowerCase().includes(searchQuery.toLowerCase())
-    );
+
+  // Filter patients based on disease name (only for Pie Chart)
+  const filteredPatientsForPie = useMemo(() => {
+    return patientsData.filter((patient) => {
+      const matchesDisease = searchQuery ? (patient.medical_Condition || '').toLowerCase().includes(searchQuery.toLowerCase()) : true;
+      return matchesDisease;
+    });
   }, [searchQuery, patientsData]);
+
+  // Filter patients based on disease name and insurance provider (only for Hospital Billing Chart)
+  const filteredPatientsForHospital = useMemo(() => {
+    return patientsData.filter((patient) => {
+      const matchesDisease = searchQuery ? (patient.medical_Condition || '').toLowerCase().includes(searchQuery.toLowerCase()) : true;
+      const matchesInsurance = insuranceQuery ? (patient.insurance_provider || '').toLowerCase().includes(insuranceQuery.toLowerCase()) : true;
+      return matchesDisease && matchesInsurance;
+    });
+  }, [searchQuery, insuranceQuery, patientsData]);
+
   // Group patients by hospital and calculate total billing and disease cases
   const hospitalData = useMemo(() => {
-    const hospitalBillingData = filteredPatients.reduce((acc, patient) => {
+    const hospitalBillingData = filteredPatientsForHospital.reduce((acc, patient) => {
       const { hospital, billing_amount, medical_Condition, medication } = patient;
       if (!acc[hospital]) {
         acc[hospital] = { totalBilling: 0, diseaseCases: {}, caseCount: 0 };
@@ -62,8 +78,9 @@ const InsuranceChart = ({ searchQuery }) => {
       return acc;
     }, {});
     return hospitalBillingData;
-  }, [filteredPatients]);
-  // Prepare Bar chart data
+  }, [filteredPatientsForHospital]);
+
+  // Prepare Bar chart data for hospital billing
   const hospitalChartData = useMemo(() => {
     const labels = [];
     const data = [];
@@ -90,9 +107,10 @@ const InsuranceChart = ({ searchQuery }) => {
       ],
     };
   }, [hospitalData]);
+
   // Pie chart data for Insurance coverage
   const insuranceConditionCoverage = useMemo(() => {
-    const insuranceCoverage = filteredPatients.reduce((acc, item) => {
+    const insuranceCoverage = filteredPatientsForPie.reduce((acc, item) => {
       const { insurance_provider, id } = item;
       if (!acc[insurance_provider]) {
         acc[insurance_provider] = new Set();
@@ -122,7 +140,9 @@ const InsuranceChart = ({ searchQuery }) => {
         },
       ],
     };
-  }, [filteredPatients]);
+  }, [filteredPatientsForPie]);
+
+  // Tooltip options
   const options = {
     maintainAspectRatio: false,
     plugins: {
@@ -132,16 +152,36 @@ const InsuranceChart = ({ searchQuery }) => {
       tooltip: {
         callbacks: {
           label: function (tooltipItem) {
-            return `${tooltipItem.label}: ${tooltipItem.raw} patients`;
+            if (activeChart === "insurance") {
+              // Pie chart: Display insurance provider and number of patients
+              const insuranceProvider = tooltipItem.label;
+              const patientCount = tooltipItem.raw;
+              return [
+                `Insurance Provider: ${insuranceProvider}`,
+                `Number of Patients: ${patientCount}`,
+              ];
+            } else if (activeChart === "hospital") {
+              // Bar chart: Display hospital billing amount and insurance provider
+              const hospitalName = tooltipItem.label;
+              const billingAmount = tooltipItem.raw;
+              const insuranceProvider = filteredPatientsForHospital[tooltipItem.dataIndex].insurance_provider;
+              return [
+                // `Hospital: ${hospitalName}`,
+                `Billing Amount: $${billingAmount.toFixed(2)}`, // Format to 2 decimal places
+                `Insurance Provider: ${insuranceProvider}`,
+              ];
+            }
           },
         },
       },
     },
   };
+
   // Handle slider change for hospital range
   const handleSliderChange = (event) => {
     setHospitalRange(event.target.value);
   };
+
   // Get the current hospitals to show based on the range (20 hospitals at a time)
   const getCurrentHospitalData = () => {
     const hospitals = Object.keys(hospitalData);
@@ -170,6 +210,8 @@ const InsuranceChart = ({ searchQuery }) => {
       ],
     };
   };
+
+  // Render the chart based on active chart type
   const renderChart = () => {
     if (activeChart === "insurance") {
       return (
@@ -191,57 +233,50 @@ const InsuranceChart = ({ searchQuery }) => {
               <li><span style={{ backgroundColor: 'rgb(255, 150, 150)', padding: '5px' }}></span> High Billing</li>
             </ul>
           </div>
-          <div className="chart-container" style={{ width: '100%', height: '700px' }}>
+          <Form.Group className="mt-3">
+            <Form.Label>Search by Insurance Provider</Form.Label>
+            <Form.Control
+              placeholder="Enter Insurance Provider"
+              value={insuranceQuery}
+              onChange={(e) => setInsuranceQuery(e.target.value)}
+              style={{ maxWidth: '300px' }}
+            />
+          </Form.Group>
+
+          <div className="chart-container" style={{ width: '75%', height: '400px' }}>
             <Bar data={getCurrentHospitalData()} options={options} />
           </div>
-          <InputGroup className="mt-3">
-            <InputGroup.Text>Hospital Data Range</InputGroup.Text>
-            <FormControl
+
+          <Form.Group className="mt-3">
+            <Form.Label>Hospital Data Range</Form.Label>
+            <Form.Control
               type="range"
               min="0"
               max={Math.floor(Object.keys(hospitalData).length / 20)}
               value={hospitalRange}
               onChange={handleSliderChange}
-            />
-            <FormControl.Feedback type="valid">
-              {hospitalRange * 20 + 1} - {(hospitalRange + 1) * 20}
-            </FormControl.Feedback>
-          </InputGroup>
+              style={{ maxWidth: '500px' }}             />
+           
+          </Form.Group>
         </div>
       );
     }
   };
-  if (loading) {
-    return <div>Loading...</div>;
-  }
-  if (error) {
-    return <div>Error: {error}</div>;
-  }
+
   return (
-    <Container>
-      <Row>
-        <Col md={8}>
-          <div className="mb-3">
-            <Button
-              variant={activeChart === "insurance" ? "primary" : "secondary"}
-              onClick={() => setActiveChart("insurance")}
-              className="me-2"
-            >
-              Insurance Chart
-            </Button>
-            <Button
-              variant={activeChart === "hospital" ? "primary" : "secondary"}
-              onClick={() => setActiveChart("hospital")}
-            >
-              Hospital Billing Chart
-            </Button>
-          </div>
-          <div ref={chartRef}>
-            {renderChart()}
-          </div>
-        </Col>
-      </Row>
-    </Container>
+    <div >
+      <Button variant="primary" onClick={() => setActiveChart("insurance")} className="me-2">Insurance Chart</Button>
+      <Button variant="secondary" onClick={() => setActiveChart("hospital")}>Hospital Chart</Button>
+
+      {loading ? (
+        <div>Loading...</div>
+      ) : error ? (
+        <div>Error: {error}</div>
+      ) : (
+        renderChart()
+      )}
+    </div>
   );
 };
+
 export default InsuranceChart;

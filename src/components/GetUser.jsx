@@ -9,7 +9,7 @@ const GetUser = () => {
     // Function to fetch user details based on username
     const fetchUser = async () => {
         try {
-            const token = localStorage.getItem("token"); // Get the token from localStorage
+            const token = sessionStorage.getItem("token"); // Get the token from sessionStorage
             
             const response = await axios.get(`http://localhost:8088/users/${userName}`, {
                 headers: {

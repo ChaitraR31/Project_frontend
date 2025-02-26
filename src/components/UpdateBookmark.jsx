@@ -30,7 +30,7 @@ function UpdateBookmark() {
   // Handle the update
   const handleUpdate = async () => {
     setLoading(true);
-    const token = localStorage.getItem("token");
+    const token = sessionStorage.getItem("token");
     try {
       const updatedUserData = { ...updatedPatient };
       await axios.put(

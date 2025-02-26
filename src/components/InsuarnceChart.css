@@ -1,3 +1,4 @@
+/* Chart Container */
 .chart-container {
   background-color: #F4F7FC; /* Light background for the chart container */
   border-radius: 12px; /* Rounded corners */
@@ -6,6 +7,8 @@
   margin: 20px auto;
   width: 100%; /* Make it responsive, fill the available width */
 }
+
+/* Chart Container Heading */
 .chart-container h3 {
   font-size: 1.5rem;
   font-weight: 600;
@@ -13,20 +16,129 @@
   margin-bottom: 20px;
   text-align: center; /* Center the title */
 }
+
+/* Styling for the search bar */
+.input-group {
+  margin-bottom: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.input-group-text {
+  background-color: #f8f9fa;
+  border-right: 1px solid #ccc;
+  font-size: 14px;
+  font-weight: 600;
+  padding: 8px 12px; /* Reduced padding for height adjustment */
+  border-radius: 8px 0 0 8px; /* Rounded corners to the left */
+  display: flex;
+  align-items: center; /* Center align text vertically */
+}
+
+.form-control {
+  border-radius: 0 8px 8px 0; /* Rounded corners to the right */
+  padding: 8px 12px; /* Reduced padding for height adjustment */
+  font-size: 14px;
+}
+
+.form-control:focus {
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+  border-color: #007bff;
+}
+
+/* Styling for the input field hover/focus */
+input[type="text"], .form-control {
+  padding: 8px 12px; /* Consistent padding for height adjustment */
+  border-radius: 10px;
+  border: 1px solid #ccc;
+  width: 100%; /* Make the input take the full width of its container */
+  margin-bottom: 20px; /* Space below the search bar */
+  font-size: 1rem;
+  transition: border-color 0.3s ease;
+}
+
+input[type="text"]:hover, .form-control:hover {
+  border-color: #888;
+}
+
+input[type="text"]:focus, .form-control:focus {
+  outline: none;
+  border-color: #0056b3; /* Blue border when focused */
+  box-shadow: 0 0 5px rgba(0, 86, 179, 0.3); /* Subtle blue glow */
+}
+
+/* Styling for the slider */
+input[type="range"] {
+  -webkit-appearance: none;
+  width: 100%;
+  height: 8px;
+  background: #ddd;
+  border-radius: 5px;
+  outline: none;
+  transition: background 0.3s ease;
+  margin-bottom: 15px; /* Space below the slider */
+}
+
+/* Styling for the slider thumb */
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  height: 20px;
+  width: 20px;
+  background: #0056b3;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+input[type="range"]::-moz-range-thumb {
+  height: 20px;
+  width: 20px;
+  background: #0056b3;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+/* Slider hover effect */
+input[type="range"]:hover {
+  background: #bbb;
+}
+
+/* Adjusting slider thumb on hover */
+input[type="range"]::-webkit-slider-thumb:hover {
+  background: #004080; /* Darker blue */
+}
+
+input[type="range"]::-moz-range-thumb:hover {
+  background: #004080; /* Darker blue */
+}
+
+/* Styling for the feedback text below the slider */
+.form-control-feedback {
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: #666;
+  text-align: center; /* Center the text */
+  margin-top: 5px; /* Adjusted space to match the height of the input fields */
+}
+
 .chart-container .pie-chart {
   width: 100%; /* Ensure full width within the container */
   height: auto;
   max-height: 300px; /* Control max height of the chart */
   min-height: 200px; /* Set a minimum height to ensure chart visibility */
 }
+
 /* Hover effects for chart labels */
 .chart-container .legend-item {
   cursor: pointer;
   transition: color 0.3s ease;
 }
+
 .chart-container .legend-item:hover {
   color: #FF5733; /* Highlight color on hover */
 }
+
 /* Responsive Design: Make the chart responsive on smaller screens */
 @media (max-width: 768px) {
   .chart-container {
@@ -36,4 +148,78 @@
   .chart-container .pie-chart {
     max-height: 250px; /* Decrease the max height on smaller screens */
   }
+}
+
+/* Style for the Slider */
+.input-group-range {
+  margin-top: 20px;
+}
+
+input[type="range"] {
+  width: 100%;
+  height: 8px;
+  -webkit-appearance: none;
+  background: #ddd;
+  border-radius: 5px;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  height: 20px;
+  width: 20px;
+  border-radius: 50%;
+  background: #007bff;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+input[type="range"]::-webkit-slider-thumb:hover {
+  background-color: #0056b3;
+}
+
+input[type="range"]::-moz-range-thumb {
+  height: 20px;
+  width: 20px;
+  border-radius: 50%;
+  background: #007bff;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+input[type="range"]::-moz-range-thumb:hover {
+  background-color: #0056b3;
+}
+
+/* Feedback for the Slider */
+.form-control-feedback {
+  margin-top: 5px; /* Adjusted for better alignment */
+  font-size: 14px;
+  color: #888;
+  font-weight: 600;
+}
+
+/* Style for Buttons */
+button {
+  border-radius: 20px;
+  padding: 10px 20px;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+button:focus {
+  outline: none;
+}
+
+button:active {
+  background-color: #0062cc;
+  border-color: #0062cc;
+}
+
+button.secondary {
+  background-color: #f0f0f0;
+  color: #555;
+}
+
+button.secondary:hover {
+  background-color: #e1e1e1;
 }

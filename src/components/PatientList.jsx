@@ -10,7 +10,7 @@ import InsuranceCards from "./InsuranceCards";
 
 const fetchPatients = async (page) => {
   try {
-    const token = localStorage.getItem("token");
+    const token = sessionStorage.getItem("token");
     const response = await axios.get("http://localhost:3232/treatments", {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -34,6 +34,8 @@ function PatientList() {
   const [pageCount, setPageCount] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
 
+  const isLoggedIn = sessionStorage.getItem("token"); // Check if user is logged in by checking the token
+
   useEffect(() => {
     const getPatients = async () => {
       const { data, total } = await fetchPatients(currentPage);
@@ -50,6 +52,7 @@ function PatientList() {
   return (
     <div className="patient-list-container">
       {/* Carousel component with fixed size and 70% vertical height */}
+      {!isLoggedIn && (
       <Carousel className="mb-4 carousel-container">
         <Carousel.Item>
           <img
@@ -85,6 +88,7 @@ function PatientList() {
           </Carousel.Caption>
         </Carousel.Item>
       </Carousel>
+      )}
 
       {/* Patient Search and List */}
       <InsuranceCards/>

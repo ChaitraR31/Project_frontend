@@ -51,7 +51,7 @@ const PatientSearch = ({ patientsData }) => {
 
   return (
     <div className="container mt-4 patient-search">
-      <h2 className="mb-4 text-center">🔍 Patient Search</h2>
+      <h2 className="mb-4 text-center">🔍 Find Out What You Want</h2>
 
       {/* Basic Search Section */}
       <div className="row g-3">

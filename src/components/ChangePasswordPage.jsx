@@ -1,32 +1,33 @@
 import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom"; // Import useNavigate
 import "./ChangePasswordPage.css"; // Import the CSS for styling
+import { Toast } from "react-bootstrap";
+import { toast, ToastContainer } from "react-toastify";
 
 const ChangePasswordPage = () => {
   const { username } = useParams(); // Get the username from the URL
   const [tempPassword, setTempPassword] = useState(""); // Temporary password from the email
-  const [oldPassword, setOldPassword] = useState(""); // The temporary password
   const [newPassword, setNewPassword] = useState(""); // The new password
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate(); // Initialize the navigate function
 
 
   // Fetch the temporary password based on the username, or receive it from another source (email, etc.)
-  useEffect(() => {
+  // useEffect(() => {
     // Example of fetching the temporary password for the username
-    const fetchTempPassword = async () => {
-      // Simulate getting the tempPassword from an API (you could replace this with a real API call)
-      setTempPassword("Temp@123"); // Simulated temp password, replace with real logic
-      setOldPassword("Temp@123"); // Pre-fill the old password with the temp password
-    };
+  //   const fetchTempPassword = async () => {
+  //     // Simulate getting the tempPassword from an API (you could replace this with a real API call)
+  //     setTempPassword("Temp@123"); // Simulated temp password, replace with real logic
+  //     setOldPassword("Temp@123"); // Pre-fill the old password with the temp password
+  //   };
 
-    fetchTempPassword();
-  }, [username]);
+  //   fetchTempPassword();
+  // }, [username]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-    console.log("Old Password (Temporary):", oldPassword); // Log old password (temporary password)
+    console.log("Old Password (Temporary):", tempPassword); // Log old password (temporary password)
     console.log("New Password:", newPassword); // Log the new password
 
     try {
@@ -35,7 +36,7 @@ const ChangePasswordPage = () => {
         method: "POST", // or PATCH depending on your API
         body: JSON.stringify({
           username,
-          oldPassword,
+          oldPassword:tempPassword,
           newPassword,
         }),
         headers: { "Content-Type": "application/json" },
@@ -44,7 +45,7 @@ const ChangePasswordPage = () => {
       setLoading(false);
 
       if (response.ok) {
-        alert("Password has been successfully changed.");
+        toast.success("Password has been successfully changed.");
         navigate("/login"); // Redirect to the login page
 
         // Redirect to login page or another page after successful password change
@@ -54,7 +55,7 @@ const ChangePasswordPage = () => {
     } catch (error) {
       setLoading(false);
       console.error("Error:", error);
-      alert("An unexpected error occurred.");
+      toast.error("An unexpected error occurred.");
     }
   };
 
@@ -69,10 +70,9 @@ const ChangePasswordPage = () => {
             id="oldPassword"
             type="password"
             className="input"
-            value={oldPassword}
-            onChange={(e) => setOldPassword(e.target.value)}
+            value={tempPassword}
+            onChange={(e) => setTempPassword(e.target.value)}
             required
-            disabled
             placeholder="Temporary password"
           />
 
@@ -92,6 +92,7 @@ const ChangePasswordPage = () => {
           </button>
         </form>
       </div>
+      <ToastContainer/>
     </div>
   );
 };

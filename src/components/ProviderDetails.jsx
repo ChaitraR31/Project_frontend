@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import { Card, Row, Col, Button, Spinner, Alert } from 'react-bootstrap';
+import { Card, Row, Col, Button, Spinner, Alert, Form } from 'react-bootstrap';
 import { FaBookmark, FaRegBookmark } from 'react-icons/fa'; // Importing bookmark icons
 import { toast } from 'react-toastify'; // Assuming you're using react-toastify for notifications
 
@@ -10,6 +10,8 @@ function ProviderDetails() {
   const [providerDetails, setProviderDetails] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [search, setSearch] = useState(""); // Search input state
+  const [sortOrder, setSortOrder] = useState("asc"); // Default sorting to ascending
   const navigate = useNavigate(); // To navigate the user to login page
 
   // Function to add provider to bookmarks
@@ -47,7 +49,7 @@ function ProviderDetails() {
         return;
       }
 
-      // // Add the provider to bookmarks
+      // Add the provider to bookmarks
       await axios.post(
         `http://localhost:8085/bookmark/add_bookmark`,
         {
@@ -83,9 +85,7 @@ function ProviderDetails() {
       toast.success("Provider bookmarked successfully!");
       navigate("/bookmarked-patients");
 
-    } 
-
-    catch (err) {
+    } catch (err) {
       toast.error(`Error: ${err.response?.data?.message || "Failed to add bookmark"}`);
     }
   };
@@ -141,21 +141,64 @@ function ProviderDetails() {
     );
   }
 
+  // Handle input change for search
+  const handleSearchChange = (e) => {
+    setSearch(e.target.value);
+  };
+
+  // Toggle sort order (ascending/descending)
+  const toggleSortOrder = () => {
+    setSortOrder((prev) => (prev === "asc" ? "desc" : "asc"));
+  };
+
+  // Filter and sort provider details based on search and sortOrder
+  const filteredAndSortedProviders = providerDetails
+    .filter((item) => {
+      const searchTerm = search.toLowerCase();
+      return (
+        item.medical_Condition.toLowerCase().includes(searchTerm) 
+      );
+    })
+    .sort((a, b) => {
+      if (sortOrder === "asc") {
+        return a.billing_amount - b.billing_amount;
+      } else {
+        return b.billing_amount - a.billing_amount;
+      }
+    });
+
   return (
-    <div className="container mt-4">
-      
-      <h3 className="text-center mb-4" style={{ fontSize: '24px', fontWeight: 'bold' }}>
+<div style={{ backgroundImage:'url(https://wallpapers.com/images/hd/white-gradient-background-1920-x-1080-xyhud3481qjd0s8s.jpg)'}}>
+<div className="container mt-4" >
+      <h3 className="text-center mb-4" style={{ fontSize: '24px', fontWeight: 'bold', marginTop: '70px' }}>
         Details for {providerName}
       </h3>
+      <Form className="mb-4">
+        <Form.Group controlId="search" style={{ paddingLeft: '20px', paddingTop: '10px' }}>
+          <Form.Label>Search by Medical Condition </Form.Label>
+          <Form.Control
+            type="text"
+            value={search}
+            onChange={handleSearchChange}
+            placeholder="Search"
+            style={{ maxWidth: '300px' }}
+          />
+        </Form.Group>
+      </Form>
+
+      <Button variant="primary" onClick={toggleSortOrder} className="mb-4" style={{ marginLeft: '20px' }}>
+        Sort by Billing Amount ({sortOrder === "asc" ? "Low to High" : "High to Low"})
+      </Button>
+      
       <Row>
-        {providerDetails.length > 0 ? (
-          providerDetails.map((item, index) => (
+        {filteredAndSortedProviders.length > 0 ? (
+          filteredAndSortedProviders.map((item, index) => (
             <Col key={index} md={4} lg={3} className="mb-4">
               <Card className="shadow-lg hover-shadow" style={{ borderRadius: '15px' }}>
                 <Card.Body>
                   <Card.Title style={{ fontWeight: 'bold' }}>{item.medical_Condition}</Card.Title>
                   <Card.Text style={{ color: 'black' }}>Hospital: {item.hospital}</Card.Text>
-                  <Card.Text style={{ color: 'black' }}>Billing-Amount: {item.billing_amount}</Card.Text>
+                  <Card.Text style={{ color: 'black' }}>Billing-Amount: {item.billing_amount.toFixed(2)}</Card.Text>
 
                   {/* Bookmark icon */}
                   <Button
@@ -183,6 +226,7 @@ function ProviderDetails() {
           </Alert>
         )}
       </Row>
+    </div>
     </div>
   );
 }

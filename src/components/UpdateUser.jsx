@@ -3,6 +3,7 @@ import { Form, Button, Container, Row, Col, Spinner } from "react-bootstrap";
 import axios from "axios";
 import { toast, ToastContainer } from "react-toastify";
 import { useNavigate } from "react-router-dom"; 
+import Footer from "./Footer";
 
 const UpdateUser = () => {
   const username = sessionStorage.getItem("username"); 
@@ -156,12 +157,13 @@ const UpdateUser = () => {
 };
 
   return (
-    <Container className="mt-5">
-      <h2 className="mb-4 text-center">Update User Profile</h2>
-      <Row className="justify-content-center">
-        <Col md={6}>
-          <Form onSubmit={handleUpdate} className="p-4 shadow-sm border rounded">
-            <Form.Group>
+    <div style={{marginTop: '80px' ,backgroundImage: 'url(https://static.investindia.gov.in/s3fs-public/2019-05/Insurance1.jpg)', backgroundSize: 'cover', backgroundRepeat: 'no-repeat', backgroundPosition: 'center'}}>
+    <Container className="mt-5" >
+      <h2 className="mb-4 text-center" >Update User Profile</h2>
+      <Row className="justify-content-center" >
+        <Col md={6}  style={{backgroundColor: 'rgba(255, 255, 255, 0.9)', borderRadius: '10px'}}>
+          <Form onSubmit={handleUpdate} className="p-4 shadow-sm border rounded" >
+            <Form.Group >
               <Form.Label>Username</Form.Label>
               <Form.Control
                 type="text"
@@ -214,9 +216,7 @@ const UpdateUser = () => {
               <Button variant="success" type="submit" disabled={loading}>
                 {loading ? <Spinner as="span" animation="border" size="sm" /> : "Update User"}
               </Button>
-            </div>
 
-            <div className="d-flex justify-content-between mt-3">
               <Button variant="danger" onClick={handleDelete} disabled={loading}>
                 {loading ? <Spinner as="span" animation="border" size="sm" /> : "Delete Profile"}
               </Button>
@@ -228,6 +228,9 @@ const UpdateUser = () => {
       {error && <div className="alert alert-danger mt-4">{error}</div>}
       <ToastContainer />
     </Container>
+    <Footer/>
+
+    </div>
   );
 };
 

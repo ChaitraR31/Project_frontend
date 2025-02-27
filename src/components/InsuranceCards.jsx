@@ -74,7 +74,7 @@ function InsuranceCards() {
   const isLoggedIn = sessionStorage.getItem("token"); // Check if user is logged in by checking the token
 
   return (
-    <div className="container">
+    <div className="container" style={{ marginTop: '90px' }}>
         {/* Information Section */}
         {isLoggedIn && (
 

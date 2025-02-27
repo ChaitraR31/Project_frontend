@@ -92,21 +92,16 @@ const RegistrationForm = () => {
   };
 
   return (
-    <div>
+    <div >
 
-    <div style={{
-      backgroundImage: "url('https://static.investindia.gov.in/s3fs-public/2019-05/Insurance1.jpg')",
-      backgroundSize: 'cover',
-      width: '100%',
-      height: '100%',
-      display: 'flex',
-      justifyContent: 'center',
-      alignItems: 'center',
-      
-    }}>
+    <div style={{    
+      backgroundImage: "url(https://static.investindia.gov.in/s3fs-public/2019-05/Insurance1.jpg)",  
+
+}}
+    >
       <Container className="mt-5"  >
         <Row className="justify-content-md-center">
-          <Col md={6}>
+          <Col md={6} style={{marginTop:'30px' ,marginBottom:'30px'}}>
             <div className="registration-form-container" >
               <h3 className="text-center mb-4">Register</h3>
               <Form onSubmit={handleSubmit}>

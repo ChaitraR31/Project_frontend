@@ -165,7 +165,8 @@ function Login() {
       display: "flex",
       justifyContent: "center",
       alignItems: "center",
-      color:"black"
+      color:"black",
+      marginTop: "50px",
     }}
     >
 

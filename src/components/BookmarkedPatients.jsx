@@ -143,28 +143,30 @@ function BookmarkedPatients() {
   };
 
   return (
-    <div style={{ marginTop: "20px" }}>
+    <div style={{ marginTop: "50px" ,backgroundColor:'skyblue',backgroundImage:'url(https://img.freepik.com/premium-vector/blue-white-gradient-color-background-with-copy-space-graphic-design_120819-1342.jpg)',backgroundRepeat:'no-repeat',backgroundSize:'cover'}}>
       <Form className="mb-4">
-        <Form.Group controlId="search">
-          <Form.Label>Search by Medical Condition or Insurance Provider</Form.Label>
+        <Form.Group  controlId="search"style={{paddingLeft:'20px', paddingTop:'50px'}} >
+          <Form.Label >Search by Medical Condition or Insurance Provider</Form.Label>
           <Form.Control
             type="text"
+            
             value={search}
             onChange={handleSearchChange}
             placeholder="Search"
+            style={{ maxWidth: '300px'}}
           />
         </Form.Group>
       </Form>
 
-      <Button variant="secondary" onClick={toggleSortOrder} className="mb-4">
+      <Button variant="primary" onClick={toggleSortOrder} className="mb-4" style={{marginLeft:'20px'}}>
         Sort by Billing Amount ({sortOrder === "asc" ? "Low to High" : "High to Low"})
       </Button>
 
       <Row>
         {filteredPatients.map((patient) => (
           <Col md={4} key={patient.bookmarkId} className="mb-4">
-            <Card>
-              <Card.Body>
+            <Card style={{marginLeft:'20px', marginRight:'5px'}}>
+              <Card.Body >
                 <Card.Title>{patient.medicalCondition}</Card.Title>
                 <Card.Text>
                   <strong>Billing Amount:</strong> {patient.billingAmount}

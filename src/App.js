@@ -7,10 +7,7 @@ import Login from "./components/Login";
 import GetUser from "./components/GetUser";
 import UpdateUser from "./components/UpdateUser";
 import DeleteUser from "./components/DeleteUser";
-import Counter from "./components/Counter";
-import { ErrorBoundary } from "react-error-boundary";
-import BuggyComponent from "./components/BuggyComponent";
-import ErrorFallback from "./components/ErrorFallback";
+
 import { useState } from "react";
 
 import { BrowserRouter, Route, Routes } from "react-router-dom";

@@ -7,7 +7,7 @@ import { Carousel } from "react-bootstrap"; // Import Carousel from react-bootst
 import { Container } from "react-bootstrap";
 import "./Pagination.css";
 import InsuranceCards from "./InsuranceCards";
-
+import Footer from './Footer';
 const fetchPatients = async (page) => {
   try {
     const token = sessionStorage.getItem("token");
@@ -177,6 +177,9 @@ function PatientList() {
           color: white;
         }
       `}</style>
+
+<Footer/>
+
     </div>
   );
 }

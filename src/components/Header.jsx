@@ -44,6 +44,7 @@ function Header() {
   };
 
   return (
+    <div>
     <Navbar collapseOnSelect expand="lg" variant="light" className="sticky-top" style={{ background: 'white', boxShadow: '0px 4px 10px rgba(0, 0, 0, 0.1)' }}>
       <Container>
         <Navbar.Brand
@@ -52,7 +53,7 @@ function Header() {
           style={{ fontFamily: "'Merriweather', serif", cursor: 'pointer', marginLeft: 'auto' }}
           onClick={handleHomeClick}
         >
-          Insurance Efficiency
+          InsuraPulse
         </Navbar.Brand>
 
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
@@ -141,8 +142,14 @@ function Header() {
           </Nav>
         </Navbar.Collapse>
       </Container>
+      
       <ToastContainer />
+      
     </Navbar>
+    
+
+    </div>
+    
   );
 }
 

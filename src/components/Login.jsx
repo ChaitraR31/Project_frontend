@@ -7,6 +7,7 @@ import { FaEyeSlash } from "react-icons/fa";
 import { BsEye } from "react-icons/bs";
 import "react-toastify/dist/ReactToastify.css";
 import { toast, ToastContainer } from "react-toastify";
+import Footer from "./Footer";
 
 function Login() {
   const { login } = useAuth();
@@ -157,6 +158,7 @@ function Login() {
   };
 
   return (
+    <div>
     <div className="login-container" 
     style={{
       height: "100vh",
@@ -253,7 +255,10 @@ function Login() {
         </Row>
       </Container>
       <ToastContainer />
+
     </div >
+    <Footer/>
+    </div>
 
   );
 }

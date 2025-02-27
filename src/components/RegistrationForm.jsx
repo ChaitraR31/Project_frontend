@@ -5,6 +5,7 @@ import './RegistrationForm.css'; // Import the CSS file for styles
 import { useNavigate } from "react-router-dom"; // Import useNavigate
 import { toast, ToastContainer } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
+import Footer from "./Footer";
 
 const RegistrationForm = () => {
   const [formData, setFormData] = useState({
@@ -91,6 +92,8 @@ const RegistrationForm = () => {
   };
 
   return (
+    <div>
+
     <div style={{
       backgroundImage: "url('https://static.investindia.gov.in/s3fs-public/2019-05/Insurance1.jpg')",
       backgroundSize: 'cover',
@@ -205,6 +208,9 @@ const RegistrationForm = () => {
         </Row>
       </Container>
       <ToastContainer />
+
+    </div>
+      <Footer />
     </div>
   );
 };

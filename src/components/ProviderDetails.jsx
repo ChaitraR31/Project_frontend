@@ -81,7 +81,11 @@ function ProviderDetails() {
       );
 
       toast.success("Provider bookmarked successfully!");
-    } catch (err) {
+      navigate("/bookmarked-patients");
+
+    } 
+
+    catch (err) {
       toast.error(`Error: ${err.response?.data?.message || "Failed to add bookmark"}`);
     }
   };

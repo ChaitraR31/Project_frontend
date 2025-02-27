@@ -1,9 +1,11 @@
 import React from 'react';
 import { Container, Row, Col, Card, Button, ListGroup } from 'react-bootstrap';
 import { FaRegClipboard, FaMoneyBillWave, FaUsers } from 'react-icons/fa';
+import Footer from './Footer';
 
 const About = () => {
   return (
+    <div>
     <Container fluid className="about-container" style={{ padding: '50px 0' }}>
       <Row>
         <Col md={12} className="text-center mb-4">
@@ -81,6 +83,8 @@ const About = () => {
         </Col>
       </Row>
     </Container>
+    <Footer/>
+    </div>
   );
 };
 

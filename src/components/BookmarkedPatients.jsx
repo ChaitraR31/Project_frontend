@@ -21,7 +21,7 @@ function BookmarkedPatients() {
         const username = sessionStorage.getItem("username");
         if (username) {
           try {
-            const response = await axios.get(`http://localhost:8085/bookmark/get/${username}`, {
+            const response = await axios.get(`http://localhost:8999/bookmark/get/${username}`, {
               headers: {
                 Authorization: `Bearer ${token}`,
               },
@@ -37,7 +37,7 @@ function BookmarkedPatients() {
               console.log("Provider to bookmark after login: ", provider);
               // Add the provider to bookmarks after login
               await axios.post(
-                `http://localhost:8085/bookmark/add_bookmark`,
+                `http://localhost:8999/bookmark/add_bookmark`,
                 {
                   age: provider.age,
                   gender: provider.gender,
@@ -112,7 +112,7 @@ function BookmarkedPatients() {
     const token = sessionStorage.getItem("token"); // Get token from sessionStorage
     if (token) {
       axios
-        .delete(`http://localhost:8085/bookmark/delete_bookmark/${patient.userName}/${patient.bookmarkId}`, {
+        .delete(`http://localhost:8999/bookmark/delete_bookmark/${patient.userName}/${patient.bookmarkId}`, {
           headers: {
             Authorization: `Bearer ${token}`, // Authorization header with token
           },

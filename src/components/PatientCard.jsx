@@ -16,7 +16,7 @@ function PatientCard({ patient, isHovered }) {
       const checkBookmarkStatus = async () => {
         try {
           const response = await axios.get(
-            `http://localhost:8085/bookmark/get/${userName}`,
+            `http://localhost:8999/bookmark/get/${userName}`,
             { headers: { Authorization: `Bearer ${token}` } }
           );
           const isAlreadyBookmarked = response.data.some(
@@ -46,7 +46,7 @@ function PatientCard({ patient, isHovered }) {
 
     try {
       const response = await axios.post(
-        'http://localhost:8085/bookmark/add_bookmark',
+        'http://localhost:8999/bookmark/add_bookmark',
         {
           age: patient.age,
           gender: patient.gender,

@@ -46,7 +46,7 @@ const UpdateUser = () => {
     setLoading(true);
     try {
       const token = sessionStorage.getItem("token");
-      const response = await axios.get(`http://localhost:8087/user/get/${username}`, {
+      const response = await axios.get(`http://localhost:8999/user/get/${username}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -77,7 +77,7 @@ const UpdateUser = () => {
       };
 
       const token = sessionStorage.getItem("token");
-      const res = await axios.put(`http://localhost:8087/user/update/${username}`, updatedData, {
+      const res = await axios.put(`http://localhost:8999/user/update/${username}`, updatedData, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -102,7 +102,7 @@ const UpdateUser = () => {
             // Step 1: Delete user's bookmarks from all services
             let bookmarkDeleted = false;
             try {
-                await axios.delete(`http://localhost:8085/bookmark/delete_bookmark/${username}`, {
+                await axios.delete(`http://localhost:8999/bookmark/delete_bookmark/${username}`, {
                     headers: {
                         Authorization: `Bearer ${token}`,
                     },
@@ -114,12 +114,12 @@ const UpdateUser = () => {
 
             // Step 2: Delete the profile regardless of bookmarks
             await axios.all([
-                axios.delete(`http://localhost:8089/authuser/remove/${username}`, {
+                axios.delete(`http://localhost:8999/authuser/remove/${username}`, {
                     headers: {
                         Authorization: `Bearer ${token}`,
                     },
                 }),
-                axios.delete(`http://localhost:8087/user/delete/${username}`, {
+                axios.delete(`http://localhost:8999/user/delete/${username}`, {
                     headers: {
                         Authorization: `Bearer ${token}`,
                     },
@@ -246,7 +246,7 @@ export default UpdateUser;
   //     try {
   //       const token = sessionStorage.getItem("token");
 
-  //       await axios.delete(`http://localhost:8085/bookmark/delete_bookmark/${username}`, {
+  //       await axios.delete(`http://localhost:8999/bookmark/delete_bookmark/${username}`, {
   //         headers: {
   //           Authorization: `Bearer ${token}`,
   //         },
@@ -254,12 +254,12 @@ export default UpdateUser;
   //       toast.info("Bookmarks deleted successfully!");
 
   //       // Step 2: Delete user's profile
-  //       await axios.delete(`http://localhost:8087/user/delete/${username}`, {
+  //       await axios.delete(`http://localhost:8999/user/delete/${username}`, {
   //         headers: {
   //           Authorization: `Bearer ${token}`,
   //         },
   //       });
-  //       await axios.delete(`http://localhost:8089/authuser/delete/${username}`, {
+  //       await axios.delete(`http://localhost:8999/authuser/delete/${username}`, {
   //         headers: {
   //           Authorization: `Bearer ${token}`,
   //         },
@@ -312,7 +312,7 @@ export default UpdateUser;
 //     setLoading(true);
 //     try {
 //       const token = sessionStorage.getItem("token");
-//       const response = await axios.get(`http://localhost:8087/user/get/${username}`, {
+//       const response = await axios.get(`http://localhost:8999/user/get/${username}`, {
 //         headers: {
 //           Authorization: `Bearer ${token}`,
 //         },
@@ -342,7 +342,7 @@ export default UpdateUser;
 //       };
 
 //       const token = sessionStorage.getItem("token");
-//       const res = await axios.put(`http://localhost:8087/user/update/${username}`, updatedData, {
+//       const res = await axios.put(`http://localhost:8999/user/update/${username}`, updatedData, {
 //         headers: {
 //           Authorization: `Bearer ${token}`,
 //         },
@@ -363,8 +363,8 @@ export default UpdateUser;
 //       try {
 //         const token = sessionStorage.getItem("token");
 
-//         // Step 1: Delete bookmarks first (on port 8085)
-//         const bookmarkDeleteResponse = await axios.delete(`http://localhost:8085/bookmark/delete_bookmark/${username}`, {
+//         // Step 1: Delete bookmarks first (on port 8999)
+//         const bookmarkDeleteResponse = await axios.delete(`http://localhost:8999/bookmark/delete_bookmark/${username}`, {
 //           headers: { Authorization: `Bearer ${token}` },
 //         });
 //         if (bookmarkDeleteResponse.status !== 200) {
@@ -372,20 +372,20 @@ export default UpdateUser;
 //         }
 //         toast.info("Bookmarks deleted successfully!");
 
-//         // Step 2: Delete user profile from service on port 8087 (primary user service)
-//         const userDeleteResponse1 = await axios.delete(`http://localhost:8087/user/delete/${username}`, {
+//         // Step 2: Delete user profile from service on port 8999 (primary user service)
+//         const userDeleteResponse1 = await axios.delete(`http://localhost:8999/user/delete/${username}`, {
 //           headers: { Authorization: `Bearer ${token}` },
 //         });
 //         if (userDeleteResponse1.status !== 200) {
-//           throw new Error("Error deleting user profile from service on port 8087.");
+//           throw new Error("Error deleting user profile from service on port 8999.");
 //         }
 
-//         // Step 3: Delete user profile from service on port 8087 (secondary user service)
-//         const userDeleteResponse2 = await axios.delete(`http://localhost:8089/authuser/delete/${username}`, {
+//         // Step 3: Delete user profile from service on port 8999 (secondary user service)
+//         const userDeleteResponse2 = await axios.delete(`http://localhost:8999/authuser/delete/${username}`, {
 //           headers: { Authorization: `Bearer ${token}` },
 //         });
 //         if (userDeleteResponse2.status !== 200) {
-//           throw new Error("Error deleting user profile from service on port 8087.");
+//           throw new Error("Error deleting user profile from service on port 8999.");
 //         }
 
 //         // Clear user data from sessionStorage

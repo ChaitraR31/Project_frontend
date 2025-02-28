@@ -15,7 +15,7 @@ const ForgotPasswordPage = () => {
 
     try {
       // Call the API endpoint to reset password (e.g., POST request)
-      const response = await fetch(`http://localhost:8089/authuser/forget/${username}`, {
+      const response = await fetch(`http://localhost:8999/authuser/forget/${username}`, {
         method: "POST",
         body: JSON.stringify({ username }),
         headers: { "Content-Type": "application/json" },

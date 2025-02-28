@@ -34,7 +34,7 @@ function UpdateBookmark() {
     try {
       const updatedUserData = { ...updatedPatient };
       await axios.put(
-        `http://localhost:8085/bookmark/update/${userName}/${bookmarkId}`,
+        `http://localhost:8999/bookmark/update/${userName}/${bookmarkId}`,
         updatedUserData,
         {
           headers: {

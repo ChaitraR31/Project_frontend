@@ -3,7 +3,7 @@ import { Pie } from 'react-chartjs-2';
 import { Bar } from 'react-chartjs-2';
 import { Chart as ChartJS, Title, Tooltip, Legend, ArcElement, CategoryScale, LinearScale, BarElement } from 'chart.js';
 import { Container, Row, Col, Button, InputGroup, FormControl, Form } from 'react-bootstrap';
-import '/home/zadmin/Desktop/React_webapp/react_v1/src/components/InsuarnceChart.css';
+import '/home/zadmin/Documents/frontend28/react_frontend_bookmark/src/components/InsuarnceChart.css';
 
 ChartJS.register(Title, Tooltip, Legend, ArcElement, CategoryScale, LinearScale, BarElement);
 

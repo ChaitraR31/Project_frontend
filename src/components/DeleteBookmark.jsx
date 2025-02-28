@@ -13,7 +13,7 @@ function DeleteBookmark() {
     setLoading(true);
     const token = sessionStorage.getItem("token");
     try {
-      await axios.delete(`http://localhost:8085/bookmark/delete_bookmark/${userName}/${bookmarkId}`, {
+      await axios.delete(`http://localhost:8999/bookmark/delete_bookmark/${userName}/${bookmarkId}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },

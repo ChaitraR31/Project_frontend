@@ -31,7 +31,7 @@ function ProviderDetails() {
     try {
       // Fetch existing bookmarks for the user
       const existingBookmarksResponse = await axios.get(
-        `http://localhost:8085/bookmark/get/${username}`,
+        `http://localhost:8999/bookmark/get/${username}`,
         {
           headers: { Authorization: `Bearer ${token}` },
         }
@@ -51,7 +51,7 @@ function ProviderDetails() {
 
       // Add the provider to bookmarks
       await axios.post(
-        `http://localhost:8085/bookmark/add_bookmark`,
+        `http://localhost:8999/bookmark/add_bookmark`,
         {
           age: provider.age,
           gender: provider.gender,

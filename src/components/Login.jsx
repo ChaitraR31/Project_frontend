@@ -50,7 +50,7 @@ function Login() {
     try {
       // Get existing bookmarks for the user
       const existingBookmarksResponse = await axios.get(
-        `http://localhost:8085/bookmark/get/${formData.username}`,
+        `http://localhost:8999/bookmark/get/${formData.username}`,
         {
           headers: { Authorization: `Bearer ${token}` },
         }
@@ -71,7 +71,7 @@ function Login() {
 
       // Proceed to add the bookmark if it doesn't already exist
       await axios.post(
-        `http://localhost:8085/bookmark/add_bookmark`,
+        `http://localhost:8999/bookmark/add_bookmark`,
         {
           age: patient.age,
           gender: patient.gender,
@@ -105,7 +105,7 @@ function Login() {
   const handleSubmit = (e) => {
     e.preventDefault();
     axios
-      .post("http://localhost:8089/authuser/login", formData)
+      .post("http://localhost:8999/authuser/login", formData)
       .then((response) => {
         const token = response.data;
         sessionStorage.setItem("token", token);
@@ -115,7 +115,7 @@ function Login() {
         toast.success("Login Successful!");
 
         axios
-          .get(`http://localhost:8085/bookmark/get/${formData.username}`, {
+          .get(`http://localhost:8999/bookmark/get/${formData.username}`, {
             headers: { Authorization: `Bearer ${token}` },
           })
           .then((bookmarkResponse) => {

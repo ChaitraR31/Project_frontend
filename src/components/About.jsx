@@ -6,7 +6,7 @@ import Footer from './Footer';
 const About = () => {
   return (
     <div style={{ marginTop: '50px' }}>
-      <Container fluid className="about-container" style={{ padding: '50px 0' }}>
+      <Container fluid className="about-container" style={{ padding: '50px ',marginLeft:'10px' }}>
         <Row>
           <Col md={12} className="text-center mb-4">
             <h1 style={{ fontSize: '3rem', color: '#343a40' }}>About Our Web App</h1>
@@ -56,8 +56,10 @@ const About = () => {
             </Card>
           </Col>
         </Row>
-        
+        </Container>
         {/* New Developers Section */}
+        <Container fluid className="about-container" style={{ padding: '50px ',marginLeft:'10px' }}>
+
         <Row className="mt-5">
           <Col md={12} className="text-center mb-4">
             <h1 style={{ fontSize: '3rem', color: '#343a40' }}>Meet Our Developers</h1>
@@ -66,26 +68,26 @@ const About = () => {
             </p>
           </Col>
         </Row>
-        <Row>
-          <Col md={2}>
-            <Card className="shadow-sm mb-4">
+        <Row className="d-flex justify-content-center">
+          <Col md={2} className="mb-4" >
+            <Card className="shadow-sm" style={{ height: '580px' }}>
               <Card.Body className="text-center">
                 <Image
-                  src="https://via.placeholder.com/150" // Placeholder image, replace with real images
+                  src="https://via.placeholder.com/150"
                   roundedCircle
                   fluid
                   style={{ width: '150px', height: '150px' }}
                 />
                 <h5 className="mt-3">Shivashankar M N</h5>
-                <p className="text-muted">Lead Developer</p>
+                <p><strong>Full Stack Developer in Java</strong></p>
                 <Card.Text>
-                  Shivashankar is a skilled developer specializing in full-stack development. With expertise in React, Node.js, and databases, he has played a pivotal role in building and optimizing our web application.
+                  Shivashankar is a skilled developer specializing in full-stack development. With expertise in React and databases, he has played a pivotal role in building and optimizing our web application.
                 </Card.Text>
               </Card.Body>
             </Card>
           </Col>
-          <Col md={2}>
-            <Card className="shadow-sm mb-4">
+          <Col md={2} className="mb-4">
+            <Card className="shadow-sm" style={{ height: '580px' }}>
               <Card.Body className="text-center">
                 <Image
                   src="https://via.placeholder.com/150"
@@ -93,16 +95,16 @@ const About = () => {
                   fluid
                   style={{ width: '150px', height: '150px' }}
                 />
-                <h5 className="mt-3">Shashti D B</h5>
-                <p className="text-muted">UI/UX Designer</p>
+                <h5 className="mt-3">Chaitra R</h5>
+                <p><strong>Full Stack Developer in Java</strong></p>
                 <Card.Text>
-                  Shashti has an eye for clean, user-friendly design. She has been instrumental in crafting the intuitive user interfaces that make our app easy to navigate for both patients and providers.
+                  Chaitra has an eye for clean, user-friendly design. She has been instrumental in crafting the intuitive user interfaces that make our app easy to navigate for both patients and providers.
                 </Card.Text>
               </Card.Body>
             </Card>
           </Col>
-          <Col md={2}>
-            <Card className="shadow-sm mb-4">
+          <Col md={2} className="mb-4">
+            <Card className="shadow-sm" style={{ height: '580px' }}>
               <Card.Body className="text-center">
                 <Image
                   src="https://via.placeholder.com/150"
@@ -110,16 +112,16 @@ const About = () => {
                   fluid
                   style={{ width: '150px', height: '150px' }}
                 />
-                <h5 className="mt-3">Developer 3</h5>
-                <p className="text-muted">Backend Developer</p>
+                <h5 className="mt-3">Tilottama Biswas ​</h5>
+                <p><strong>Full Stack Developer in Java</strong></p>
                 <Card.Text>
-                  Developer 3 has been working on the backend architecture of the web app, ensuring robust, scalable, and secure API integrations.
+                  Tilottama has been working on the backend architecture of the web app, ensuring robust, scalable, and secure API integrations.
                 </Card.Text>
               </Card.Body>
             </Card>
           </Col>
-          <Col md={2}>
-            <Card className="shadow-sm mb-4">
+          <Col md={2} className="mb-4">
+            <Card className="shadow-sm" style={{ height: '580px' }}>
               <Card.Body className="text-center">
                 <Image
                   src="https://via.placeholder.com/150"
@@ -127,16 +129,16 @@ const About = () => {
                   fluid
                   style={{ width: '150px', height: '150px' }}
                 />
-                <h5 className="mt-3">Developer 4</h5>
-                <p className="text-muted">Frontend Developer</p>
+                <h5 className="mt-3">Pavan Kumar Badri ​</h5>
+                <p><strong>Full Stack Developer in Java</strong></p>
                 <Card.Text>
-                  Developer 4 specializes in frontend technologies and is responsible for implementing beautiful, responsive UI components that enhance the user experience.
+                  Pavan specializes in frontend technologies and is responsible for implementing beautiful, responsive UI components that enhance the user experience.
                 </Card.Text>
               </Card.Body>
             </Card>
           </Col>
-          <Col md={2}>
-            <Card className="shadow-sm mb-4">
+          <Col md={2} className="mb-4">
+            <Card className="shadow-sm" style={{ height: '580px' }}>
               <Card.Body className="text-center">
                 <Image
                   src="https://via.placeholder.com/150"
@@ -144,10 +146,10 @@ const About = () => {
                   fluid
                   style={{ width: '150px', height: '150px' }}
                 />
-                <h5 className="mt-3">Developer 5</h5>
-                <p className="text-muted">QA Engineer</p>
+                <h5 className="mt-3">Mathavan A​​</h5>
+                            <p><strong>Full Stack Developer in Java</strong></p>
                 <Card.Text>
-                  Developer 5 ensures the quality of the app by implementing rigorous testing strategies and automation, ensuring a bug-free user experience.
+                  Pavan ensures the quality of the app by implementing rigorous testing strategies and automation, ensuring a bug-free user experience.
                 </Card.Text>
               </Card.Body>
             </Card>

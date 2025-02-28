@@ -194,7 +194,7 @@ function ProviderDetails() {
         {filteredAndSortedProviders.length > 0 ? (
           filteredAndSortedProviders.map((item, index) => (
             <Col key={index} md={4} lg={3} className="mb-4">
-              <Card className="shadow-lg hover-shadow" style={{ borderRadius: '15px' }}>
+              <Card className="shadow-lg hover-shadow" style={{ borderRadius: '15px' ,height: '190px', width: '100%'}}>
                 <Card.Body>
                   <Card.Title style={{ fontWeight: 'bold' }}>{item.medical_Condition}</Card.Title>
                   <Card.Text style={{ color: 'black' }}>Hospital: {item.hospital}</Card.Text>

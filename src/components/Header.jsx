@@ -48,7 +48,8 @@ function Header() {
     <Navbar collapseOnSelect expand="lg" variant="light" className="sticky-top" style={{ background: 'white', boxShadow: '0px 4px 10px rgba(0, 0, 0, 0.1)',position: 'fixed',width:'100%',top:'0',right:'0',left:'0',zIndex:'1000' }}>
       <Container>
         <Navbar.Brand
-          as="div"
+          as={Link}
+          to={isLoggedIn ? '/' : '/'}
           className="fw-bold fs-3 text-dark"
           style={{ fontFamily: "'Merriweather', serif", cursor: 'pointer', marginLeft: 'auto' }}
           onClick={handleHomeClick}
